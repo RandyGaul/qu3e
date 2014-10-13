@@ -42,7 +42,7 @@ First create a physics scene. Usually only one physics scene needs to ever be cr
 
     q3Scene scene( 1.0 / 60.0 );
 
-A rigid body is created from a physics scene, and rigid bodies (or shapes) cannot be shared between different scenes. Rigid bodies are created by first creating a **q3BodyDef** object:
+A rigid body is created from a physics scene, and rigid bodies (or shapes) cannot be shared between different scenes. Rigid bodies are created by first creating a **q3BodyDef** object. Def objects can be created right on the stack:
 
     q3BodyDef bodyDef;
 	q3Body* body = scene.CreateBody( bodyDef );
@@ -55,7 +55,9 @@ The **q3BodyDef** can be passed to a scene in return for a new rigid body. The b
 	q3Identity( worldSpace.rotation ); // Specify the origin, and identity orientation
 	
 	// Create a box at the origin with width, height, depth = (1.0, 1.0, 1.0)
+	// and add it to a rigid body
 	boxDef.Set( worldSpace, q3Vec3( 1.0, 1.0, 1.0 ) );
+	body->AddBox( boxDef );
 	
 To simulate the scene simply call **scene.Step( )**. This will simulate the world forward in time by the timestep specified at the scene's construction (usually 1/60 or 1/30).
 

@@ -1,7 +1,7 @@
 qu3e
 ====
 
-qu3e is a compact, light-weight and fast 3D physics engine in C++. It is has been specifically created to be used in games. It is portable with no external dependencies other than the files: *cassert* and *cmath*. qu3e is designed to have an extremely simple interface for creating and manipulating rigid bodies.
+qu3e is a compact, light-weight and fast 3D physics engine in C++. It is has been specifically created to be used in games. It is portable with no external dependencies other than various standard c header files (such as **cassert** and **cmath**). qu3e is designed to have an extremely simple interface for creating and manipulating rigid bodies.
 
 qu3e is of particular interest to those in need of a fast and simple 3D physics engine, without spending too much time learning about how the whole engine works. In order to keep things very simple and friendly for new users, only box collision is supported. No other shapes are supported (capsules and spheres may be added in the future if requested).
 
@@ -85,4 +85,4 @@ Erin Catto's online resources, such as [Box2D](http://box2d.org) provided a majo
 License
 -------
 
-qu3e is licenseed under the [zlib license](http://en.wikipedia.org/wiki/Zlib_License). See LICENSE.txt for more information.
+qu3e is licensed under the [zlib license](http://en.wikipedia.org/wiki/Zlib_License). See LICENSE.txt for more information.

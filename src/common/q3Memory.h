@@ -27,18 +27,13 @@
 #ifndef Q3MEMORY_H
 #define Q3MEMORY_H
 
-#include <xmmintrin.h>
 #include <malloc.h>
-#include <stdarg.h>
 
 #include "q3Types.h"
 
 //--------------------------------------------------------------------------------------------------
 // Memory Macros
 //--------------------------------------------------------------------------------------------------
-#define Q3_PREFETCH( P ) \
-	_mm_prefetch( (const char *)P, _MM_HINT_T0 )
-
 #define Q3_PTR_ADD( P, BYTES ) \
 	(decltype( P )(((u8 *)P) + (BYTES)))
 

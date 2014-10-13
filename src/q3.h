@@ -27,14 +27,14 @@
 #ifndef Q3_H
 #define Q3_H
 
-#include "common\q3Types.h"
-#include "scene\q3Scene.h"
-#include "dynamics\q3Body.h"
-#include "collision\q3Box.h"
-#include "math\q3Vec3.h"
-#include "math\q3Mat3.h"
-#include "math\q3Quaternion.h"
-#include "math\q3Transform.h"
-#include "debug\q3Render.h"
+#include "common/q3Types.h"
+#include "scene/q3Scene.h"
+#include "dynamics/q3Body.h"
+#include "collision/q3Box.h"
+#include "math/q3Vec3.h"
+#include "math/q3Mat3.h"
+#include "math/q3Quaternion.h"
+#include "math/q3Transform.h"
+#include "debug/q3Render.h"
 
 #endif // Q3_H

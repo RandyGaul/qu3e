@@ -9,3 +9,8 @@ include_directories(
     )
 
 add_subdirectory(src)
+
+option(BUILD_DEMO "Build the demo application" ON)
+if(BUILD_DEMO)
+  add_subdirectory(demo)
+endif()

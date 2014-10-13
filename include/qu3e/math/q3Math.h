@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------------------------
 /**
-@file	q3Transform.h
+@file	q3Math.h
 
 @author	Randy Gaul
 @date	10/10/2014
@@ -24,21 +24,26 @@
 */
 //--------------------------------------------------------------------------------------------------
 
-#ifndef Q3TRANSFORM_H
-#define Q3TRANSFORM_H
+#ifndef Q3MATH_H
+#define Q3MATH_H
 
-#include "q3Math.h"
-#include "../common/q3Geometry.h"
+#include <cmath>		// abs, sqrt
+#include <cassert>		// assert
+#include <algorithm>	// max, min
+#include <limits> //numeric_limits
+#include <qu3e/common/q3Types.h>
 
 //--------------------------------------------------------------------------------------------------
-// q3Transform
+// q3Math
 //--------------------------------------------------------------------------------------------------
-struct q3Transform
-{
-	q3Vec3 position;
-	q3Mat3 rotation;
-};
+constexpr float Q3_R32_MAX = std::numeric_limits<float>::max();
 
-#include "q3Transform.inl"
+const r32 q3PI = r32( 3.14159265 );
 
-#endif // Q3TRANSFORM_H
+#include <qu3e/math/q3Vec3.h>
+#include <qu3e/math/q3Mat3.h>
+#include <qu3e/math/q3Quaternion.h>
+
+#include <qu3e/math/q3Math.inl>
+
+#endif // Q3MATH_H

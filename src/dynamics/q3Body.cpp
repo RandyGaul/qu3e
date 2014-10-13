@@ -24,11 +24,11 @@
 */
 //--------------------------------------------------------------------------------------------------
 
-#include "q3Body.h"
-#include "../scene/q3Scene.h"
-#include "q3Contact.h"
-#include "../broadphase/q3BroadPhase.h"
-#include "../collision/q3Box.h"
+#include <qu3e/dynamics/q3Body.h>
+#include <qu3e/scene/q3Scene.h>
+#include <qu3e/dynamics/q3Contact.h>
+#include <qu3e/broadphase/q3BroadPhase.h>
+#include <qu3e/collision/q3Box.h>
 
 //--------------------------------------------------------------------------------------------------
 // q3Body

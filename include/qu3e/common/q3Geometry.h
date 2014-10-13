@@ -27,7 +27,7 @@
 #ifndef Q3GEOMETRY_H
 #define Q3GEOMETRY_H
 
-#include "../math/q3Math.h"
+#include <qu3e/math/q3Math.h>
 
 //--------------------------------------------------------------------------------------------------
 // q3AABB
@@ -82,6 +82,6 @@ struct q3RaycastData
 	const q3Vec3 GetImpactPoint( ) const;
 };
 
-#include "q3Geometry.inl"
+#include <qu3e/common/q3Geometry.inl>
 
 #endif // Q3GEOMETRY_H

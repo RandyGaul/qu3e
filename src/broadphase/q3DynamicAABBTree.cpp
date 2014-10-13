@@ -24,8 +24,8 @@
 */
 //--------------------------------------------------------------------------------------------------
 
-#include "q3DynamicAABBTree.h"
-#include "../debug/q3Render.h"
+#include <qu3e/broadphase/q3DynamicAABBTree.h>
+#include <qu3e/debug/q3Render.h>
 
 //--------------------------------------------------------------------------------------------------
 // q3DynamicAABBTree

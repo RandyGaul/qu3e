@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------------------------
 /**
-@file	q3Contact.cpp
+@file	q3Transform.h
 
 @author	Randy Gaul
 @date	10/10/2014
@@ -24,44 +24,21 @@
 */
 //--------------------------------------------------------------------------------------------------
 
-#include <qu3e/dynamics/q3Contact.h>
+#ifndef Q3TRANSFORM_H
+#define Q3TRANSFORM_H
+
+#include <qu3e/math/q3Math.h>
+#include <qu3e/common/q3Geometry.h>
 
 //--------------------------------------------------------------------------------------------------
-// q3Contact
+// q3Transform
 //--------------------------------------------------------------------------------------------------
-void q3Manifold::SetPair( q3Box *a, q3Box *b )
+struct q3Transform
 {
-	A = a;
-	B = b;
+	q3Vec3 position;
+	q3Mat3 rotation;
+};
 
-	sensor = A->sensor || B->sensor;
-}
+#include <qu3e/math/q3Transform.inl>
 
-// Generate contact information
-void q3ContactConstraint::SolveCollision( void )
-{
-	manifold.contactCount = 0;
-
-	q3BoxtoBox( &manifold, A, B );
-
-	if ( manifold.contactCount > 0 )
-	{
-		if ( m_flags & eColliding )
-			m_flags |= eWasColliding;
-
-		else
-			m_flags |= eColliding;
-	}
-
-	else
-	{
-		if ( m_flags & eColliding )
-		{
-			m_flags &= ~eColliding;
-			m_flags |= eWasColliding;
-		}
-
-		else
-			m_flags &= ~eWasColliding;
-	}
-}
+#endif // Q3TRANSFORM_H

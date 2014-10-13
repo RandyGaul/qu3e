@@ -28,8 +28,8 @@
 #define Q3MAT3_H
 
 #include <cstring>	// memset
-#include "../common/q3Types.h"
-#include "q3Vec3.h"
+#include <qu3e/common/q3Types.h>
+#include <qu3e/math/q3Vec3.h>
 
 //--------------------------------------------------------------------------------------------------
 // q3Mat3
@@ -87,6 +87,6 @@ struct q3Mat3
 	const q3Mat3 operator-( const q3Mat3& rhs ) const;
 };
 
-#include "q3Mat3.inl"
+#include <qu3e/math/q3Mat3.inl>
 
 #endif // Q3MAT3_H

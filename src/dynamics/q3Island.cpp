@@ -24,13 +24,13 @@
 */
 //--------------------------------------------------------------------------------------------------
 
-#include "q3Island.h"
-#include "q3Body.h"
-#include "../common/q3Memory.h"
-#include "q3ContactSolver.h"
-#include "../common/q3Settings.h"
-#include "../broadphase/q3BroadPhase.h"
-#include "q3Contact.h"
+#include <qu3e/dynamics/q3Island.h>
+#include <qu3e/dynamics/q3Body.h>
+#include <qu3e/common/q3Memory.h>
+#include <qu3e/dynamics/q3ContactSolver.h>
+#include <qu3e/common/q3Settings.h>
+#include <qu3e/broadphase/q3BroadPhase.h>
+#include <qu3e/dynamics/q3Contact.h>
 
 //--------------------------------------------------------------------------------------------------
 // q3Island

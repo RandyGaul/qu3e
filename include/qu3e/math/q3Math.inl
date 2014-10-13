@@ -139,3 +139,5 @@ inline i32 q3RandomInt( i32 low, i32 high )
 {
 	return (rand( ) % (high - low + 1) + low);
 }
+
+#define Abs q3Abs

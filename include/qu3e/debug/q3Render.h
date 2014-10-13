@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------------------------
 /**
-@file	q3ContactManager.h
+@file	q3Render.h
 
 @author	Randy Gaul
 @date	10/10/2014
@@ -24,62 +24,37 @@
 */
 //--------------------------------------------------------------------------------------------------
 
-#ifndef Q3CONTACTMANAGER_H
-#define Q3CONTACTMANAGER_H
+#ifndef Q3RENDER_H
+#define Q3RENDER_H
 
 #include "../common/q3Types.h"
-#include "../broadphase/q3BroadPhase.h"
-#include "../common/q3Memory.h"
 
 //--------------------------------------------------------------------------------------------------
-// q3ContactManager
+// q3Render
 //--------------------------------------------------------------------------------------------------
-struct q3ContactConstraint;
-class q3ContactListener;
-struct q3Box;
-class q3Body;
-class q3Render;
-class q3Stack;
-
-class q3ContactManager
+class q3Render
 {
 public:
-	q3ContactManager( q3Stack* stack );
+	virtual void SetPenColor( f32 r, f32 g, f32 b, f32 a = 1.0f ) = 0;
+	virtual void SetPenPosition( f32 x, f32 y, f32 z ) = 0;
+	virtual void SetScale( f32 sx, f32 sy, f32 sz ) = 0;
 
-	// Add a new contact constraint for a pair of objects
-	// unless the contact constraint already exists
-	void AddContact( q3Box *A, q3Box *B );
+	// Render a line from pen position to this point.
+	// Sets the pen position to the new point.
+	virtual void Line( f32 x, f32 y, f32 z ) = 0;
 
-	// Has broadphase find all contacts and call AddContact on the
-	// ContactManager for each pair found
-	void FindNewContacts( void );
+	virtual void SetTriNormal( f32 x, f32 y, f32 z ) = 0;
 
-	// Remove a specific contact
-	void RemoveContact( q3ContactConstraint *contact );
+	// Render a triangle with the normal set by SetTriNormal.
+	virtual void Triangle(
+		f32 x1, f32 y1, f32 z1,
+		f32 x2, f32 y2, f32 z2,
+		f32 x3, f32 y3, f32 z3
+		) = 0;
 
-	// Remove all contacts from a body
-	void RemoveContactsFromBody( q3Body *body );
-	void RemoveFromBroadphase( q3Body *body );
-
-	// Remove contacts without broadphase overlap
-	// Solves contact manifolds
-	void TestCollisions( void );
-	static void SolveCollision( void* param );
-
-	void RenderContacts( q3Render* debugDrawer ) const;
-
-private:
-	q3ContactConstraint* m_contactList;
-	i32 m_contactCount;
-	q3Stack* m_stack;
-	q3PagedAllocator m_allocator;
-	q3BroadPhase m_broadphase;
-	q3ContactListener *m_contactListener;
-
-	friend class q3BroadPhase;
-	friend class q3Scene;
-	friend struct q3Box;
-	friend class q3Body;
+	// Draw a point with the scale from SetScale
+	virtual void Point( ) = 0;
 };
 
-#endif // Q3CONTACTMANAGER_H
+#endif // Q3RENDER_H
+

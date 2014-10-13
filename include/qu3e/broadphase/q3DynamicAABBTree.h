@@ -27,8 +27,8 @@
 #ifndef Q3DYNAMICAABBTREE_H
 #define Q3DYNAMICAABBTREE_H
 
-#include "../math/q3Math.h"
-#include "../common/q3Geometry.h"
+#include <qu3e/math/q3Math.h>
+#include <qu3e/common/q3Geometry.h>
 
 //--------------------------------------------------------------------------------------------------
 // q3DynamicAABBTree
@@ -120,6 +120,6 @@ private:
 	i32 m_freeList;
 };
 
-#include "q3DynamicAABBTree.inl"
+#include <qu3e/broadphase/q3DynamicAABBTree.inl>
 
 #endif // Q3DYNAMICAABBTREE_H

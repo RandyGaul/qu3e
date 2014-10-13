@@ -27,10 +27,13 @@
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
-#endif
 #include "glut.h"
+#elif defined __APPLE__
+#include <GLUT/glut.h>
+#endif
+
 #include "Clock.h"
-#include "../src/q3.h"
+#include <qu3e/q3.h>
 
 #define ESC_KEY 27
 

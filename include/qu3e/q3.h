@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------------------------
 /**
-@file	q3Collide.h
+@file	q3.h
 
 @author	Randy Gaul
 @date	10/10/2014
@@ -24,16 +24,17 @@
 */
 //--------------------------------------------------------------------------------------------------
 
-#ifndef Q3COLLIDE_H
-#define Q3COLLIDE_H
+#ifndef Q3_H
+#define Q3_H
 
-#include "q3Box.h"
+#include <qu3e/common/q3Types.h>
+#include <qu3e/scene/q3Scene.h>
+#include <qu3e/dynamics/q3Body.h>
+#include <qu3e/collision/q3Box.h>
+#include <qu3e/math/q3Vec3.h>
+#include <qu3e/math/q3Mat3.h>
+#include <qu3e/math/q3Quaternion.h>
+#include <qu3e/math/q3Transform.h>
+#include <qu3e/debug/q3Render.h>
 
-//--------------------------------------------------------------------------------------------------
-// q3Collide
-//--------------------------------------------------------------------------------------------------
-struct q3Manifold;
-
-void q3BoxtoBox( q3Manifold* m, q3Box* a, q3Box* b );
-
-#endif // Q3COLLIDE_H
+#endif // Q3_H

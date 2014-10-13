@@ -24,15 +24,14 @@
 */
 //--------------------------------------------------------------------------------------------------
 
-#include <malloc.h>
-
-#include "q3Scene.h"
-#include "../dynamics/q3Body.h"
-#include "../dynamics/q3Island.h"
-#include "../dynamics/q3Contact.h"
-#include "../dynamics/q3Island.h"
-#include "../dynamics/q3ContactSolver.h"
-#include "../collision/q3Box.h"
+#include <qu3e/common/q3Memory.h>
+#include <qu3e/scene/q3Scene.h>
+#include <qu3e/dynamics/q3Body.h>
+#include <qu3e/dynamics/q3Island.h>
+#include <qu3e/dynamics/q3Contact.h>
+#include <qu3e/dynamics/q3Island.h>
+#include <qu3e/dynamics/q3ContactSolver.h>
+#include <qu3e/collision/q3Box.h>
 
 //--------------------------------------------------------------------------------------------------
 // q3Scene

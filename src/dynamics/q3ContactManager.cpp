@@ -24,12 +24,12 @@
 */
 //--------------------------------------------------------------------------------------------------
 
-#include "q3ContactManager.h"
-#include "../collision/q3Box.h"
-#include "q3Body.h"
-#include "q3Contact.h"
-#include "../scene/q3Scene.h"
-#include "../debug/q3Render.h"
+#include <qu3e/dynamics/q3ContactManager.h>
+#include <qu3e/collision/q3Box.h>
+#include <qu3e/dynamics/q3Body.h>
+#include <qu3e/dynamics/q3Contact.h>
+#include <qu3e/scene/q3Scene.h>
+#include <qu3e/debug/q3Render.h>
 
 //--------------------------------------------------------------------------------------------------
 // q3ContactManager

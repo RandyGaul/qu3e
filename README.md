@@ -1,7 +1,7 @@
 qu3e
 ====
 
-qu3e is a compact, light-weight and fast 3D physics engine in C++. It is has been specifically created to be used in games. It is portable with no external dependencies other than <cassert> and <cmath>. qu3e is designed to have an extremely simple interface for creating and manipulating rigid bodies.
+qu3e is a compact, light-weight and fast 3D physics engine in C++. It is has been specifically created to be used in games. It is portable with no external dependencies other than the files: *cassert* and *cmath*. qu3e is designed to have an extremely simple interface for creating and manipulating rigid bodies.
 
 qu3e is of particular interest to those in need of a fast and simple 3D physics engine, without spending too much time learning about how the whole engine works. In order to keep things very simple and friendly for new users, only box collision is supported. No other shapes are supported (capsules and spheres may be added in the future if requested).
 
@@ -21,9 +21,10 @@ Feature List
 Since the primary goal of qu3e is simplicity of use the feature list is inentionally kept to a minimum. If a more full-featured open source physics engine is required I recommend the Bullet physics library:
 * Extremely simple and friendly to use API
 * 3D Oriented Bounding Box (OBB) collision detection and resolution
-* 3D Raycasting into the world
-* Ability to query the world with AABBs and points
+* 3D Raycasting into the world *
+* Ability to query the world with AABBs and points *
 * Callbacks for collision events
+* Sensors (collision volumes)
 * Ability to create an aggregate rigid body composed of any number of boxes
 * Box stacking
 * Islanding and sleeping for CPU optimization
@@ -32,6 +33,7 @@ Since the primary goal of qu3e is simplicity of use the feature list is inention
 * Highly accurate collision manifold generation via the Separating Axis Theorem
 * Collision layers
 * Axis of rotation locking (x, y or z axes)
+* *These are not quite done yet
 
 Using qu3e
 ----------

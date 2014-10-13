@@ -76,7 +76,7 @@ struct q3Box
 class q3BoxDef
 {
 public:
-	q3BoxDef::q3BoxDef( )
+	q3BoxDef( )
 	{
 		// Common default values
 		m_friction = r32( 0.4 );

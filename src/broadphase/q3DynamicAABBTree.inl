@@ -87,13 +87,13 @@ void q3DynamicAABBTree::Query( T *cb, q3RaycastData& rayCast ) const
 {
 	const r32 k_epsilon = r32( 1.0e-6 );
 	const i32 k_stackCapacity = 256;
-	i32 stack[k_stackCapacity];
+	i32 stack[ k_stackCapacity ];
 	i32 sp = 1;
 
 	*stack = m_root;
 
-	q3Vec3 p0 = rayCast.s;
-	q3Vec3 p1 = p0 + rayCast.t * rayCast.d;
+	q3Vec3 p0 = rayCast.start;
+	q3Vec3 p1 = p0 + rayCast.t * rayCast.dir;
 
 	while( sp )
 	{
@@ -111,32 +111,32 @@ void q3DynamicAABBTree::Query( T *cb, q3RaycastData& rayCast ) const
 		q3Vec3 d = p1 - p0;
 		q3Vec3 m = p0 + p1 - n->aabb.min - n->aabb.max;
 
-		r32 adx = Abs( d.x );
+		r32 adx = q3Abs( d.x );
 
-		if ( Abs( m.x ) > e.x + adx )
+		if ( q3Abs( m.x ) > e.x + adx )
 			continue;
 
-		r32 ady = Abs( d.y );
+		r32 ady = q3Abs( d.y );
 
-		if ( Abs( m.y ) > e.y + ady )
+		if ( q3Abs( m.y ) > e.y + ady )
 			continue;
 
-		r32 adz = Abs( d.z );
+		r32 adz = q3Abs( d.z );
 
-		if ( Abs( m.z ) > e.z + adz )
+		if ( q3Abs( m.z ) > e.z + adz )
 			continue;
 
 		adx += k_epsilon;
 		ady += k_epsilon;
 		adz += k_epsilon;
 
-		if( Abs( m.y * d.z - m.z * d.y) > e.y * adz + e.z * ady )
+		if( q3Abs( m.y * d.z - m.z * d.y) > e.y * adz + e.z * ady )
 			continue;
 
-		if( Abs( m.z * d.x - m.x * d.z) > e.x * adz + e.z * adx )
+		if( q3Abs( m.z * d.x - m.x * d.z) > e.x * adz + e.z * adx )
 			continue;
 
-		if ( Abs( m.x * d.y - m.y * d.x) > e.x * ady + e.y * adx )
+		if ( q3Abs( m.x * d.y - m.y * d.x) > e.x * ady + e.y * adx )
 			continue;
 
 		if ( n->IsLeaf( ) )

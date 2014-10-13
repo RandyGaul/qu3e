@@ -41,8 +41,10 @@ Using qu3e
 
 Using qu3e is about creating rigid bodies and attaching boxes to them. When a rigid body is initially created it exists without any collision information. Any number of shapes can be attached to a rigid body. All shapes are defined relative to their owning rigid body, or in other words: all shapes are defined in model space, where model space is the reference frame of the parent rigid body.
 
-First create a physics scene. Usually only one physics scene needs to ever be created. The user must specify a fixed timestep upon scene creation:
+The only header that should need to be included is **q3.h**. First create a physics scene. Usually only one physics scene needs to ever be created. The user must specify a fixed timestep upon scene creation:
 
+    #include "q3.h"
+	
     q3Scene scene( 1.0 / 60.0 );
 
 A rigid body is created from a physics scene, and rigid bodies (or shapes) cannot be shared between different scenes. Rigid bodies are created by first creating a **q3BodyDef** object. Def objects can be created right on the stack:

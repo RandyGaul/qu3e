@@ -21,6 +21,7 @@ Feature List
 Since the primary goal of qu3e is simplicity of use the feature list is inentionally kept to a minimum. If a more full-featured open source physics engine is required I recommend the Bullet physics library:
 * Extremely simple and friendly to use API
 * 3D Oriented Bounding Box (OBB) collision detection and resolution
+* Discrete collision detection
 * 3D Raycasting into the world *
 * Ability to query the world with AABBs and points *
 * Callbacks for collision events
@@ -28,7 +29,7 @@ Since the primary goal of qu3e is simplicity of use the feature list is inention
 * Ability to create an aggregate rigid body composed of any number of boxes
 * Box stacking
 * Islanding and sleeping for CPU optimization
-* API agnostic debug rendering interface
+* Renderer agnostic debug drawing interface
 * Dynamic AABB tree broad phase
 * Highly accurate collision manifold generation via the Separating Axis Theorem
 * Collision layers
@@ -61,6 +62,17 @@ The **q3BodyDef** can be passed to a scene in return for a new rigid body. The b
 	body->AddBox( boxDef );
 	
 To simulate the scene simply call **scene.Step( )**. This will simulate the world forward in time by the timestep specified at the scene's construction (usually 1/60 or 1/30).
+
+Future
+------
+
+As time goes on the feature list of qu3e will intentionally not grow much larger. Since the primary goal of the library is to very simple in terms of implementation, and simple to use, bloat should be avoided.
+
+Multi-threading is an interesting topic and qu3e was written with threading in mind. A job system, or task system, would be ideal to batch together things like collision detection. Perhaps a threadpool will be added to qu3e by myself or some future contributor.
+
+SIMD - I actually don't have experience using SIMD and all math in qu3e is scalar. This shouldn't really be a performance problem for anyone, but obviously it can be improved. However one clever bit of code is within Collide.cpp: the clipping of two 3D polygons is done via single dimensional lerps! This is a nice way of using scalar math to avoid the need for any SIMD in this particular case.
+
+Advanced joints (springs, rods, revolute/prismatic joints) are a nice feature of other physics libraries, and qu3e might incorporate some. They aren't on any to-do list and wouldn't be added without user requests. Some joint types wouldn't clutter the library and can be fairly easy to use for those well versed with C++. The big problem with more advanced joints is setting them up. Often an editor or visual tool is the best way to setup joints, though qu3e itself would require raw C++ to be used.
 
 Credits
 -------

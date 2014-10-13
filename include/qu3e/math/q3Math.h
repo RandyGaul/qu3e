@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------------------------
 /**
-@file	q3Collide.h
+@file	q3Math.h
 
 @author	Randy Gaul
 @date	10/10/2014
@@ -24,16 +24,26 @@
 */
 //--------------------------------------------------------------------------------------------------
 
-#ifndef Q3COLLIDE_H
-#define Q3COLLIDE_H
+#ifndef Q3MATH_H
+#define Q3MATH_H
 
-#include "q3Box.h"
+#include <cmath>		// abs, sqrt
+#include <cassert>		// assert
+#include <algorithm>	// max, min
+#include <limits> //numeric_limits
+#include <qu3e/common/q3Types.h>
 
 //--------------------------------------------------------------------------------------------------
-// q3Collide
+// q3Math
 //--------------------------------------------------------------------------------------------------
-struct q3Manifold;
+constexpr float Q3_R32_MAX = std::numeric_limits<float>::max();
 
-void q3BoxtoBox( q3Manifold* m, q3Box* a, q3Box* b );
+const r32 q3PI = r32( 3.14159265 );
 
-#endif // Q3COLLIDE_H
+#include <qu3e/math/q3Vec3.h>
+#include <qu3e/math/q3Mat3.h>
+#include <qu3e/math/q3Quaternion.h>
+
+#include <qu3e/math/q3Math.inl>
+
+#endif // Q3MATH_H

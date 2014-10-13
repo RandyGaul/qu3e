@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------------------------
 /**
-@file	q3Settings.h
+@file	q3Collide.h
 
 @author	Randy Gaul
 @date	10/10/2014
@@ -24,21 +24,16 @@
 */
 //--------------------------------------------------------------------------------------------------
 
-#ifndef Q3SETTINGS_H
-#define Q3SETTINGS_H
+#ifndef Q3COLLIDE_H
+#define Q3COLLIDE_H
 
-#include "../math/q3Math.h"
+#include <qu3e/collision/q3Box.h>
+
 //--------------------------------------------------------------------------------------------------
-// Internal Implementation Constants (do not change unless you know what you're doing)
+// q3Collide
 //--------------------------------------------------------------------------------------------------
-#define Q3_SLEEP_LINEAR r32( 0.01 )
+struct q3Manifold;
 
-#define Q3_SLEEP_ANGULAR r32( (3.0 / 180.0) * q3PI )
+void q3BoxtoBox( q3Manifold* m, q3Box* a, q3Box* b );
 
-#define Q3_SLEEP_TIME r32( 0.5 )
-
-#define Q3_BAUMGARTE r32( 0.2 )
-
-#define Q3_PENETRATION_SLOP r32( 0.05 )
-
-#endif // Q3SETTINGS_H
+#endif // Q3COLLIDE_H

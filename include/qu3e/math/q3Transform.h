@@ -27,8 +27,8 @@
 #ifndef Q3TRANSFORM_H
 #define Q3TRANSFORM_H
 
-#include "q3Math.h"
-#include "../common/q3Geometry.h"
+#include <qu3e/math/q3Math.h>
+#include <qu3e/common/q3Geometry.h>
 
 //--------------------------------------------------------------------------------------------------
 // q3Transform
@@ -39,6 +39,6 @@ struct q3Transform
 	q3Mat3 rotation;
 };
 
-#include "q3Transform.inl"
+#include <qu3e/math/q3Transform.inl>
 
 #endif // Q3TRANSFORM_H

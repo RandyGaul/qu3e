@@ -92,8 +92,8 @@ void q3DynamicAABBTree::Query( T *cb, q3RaycastData& rayCast ) const
 
 	*stack = m_root;
 
-	q3Vec3 p0 = rayCast.s;
-	q3Vec3 p1 = p0 + rayCast.t * rayCast.d;
+	q3Vec3 p0 = rayCast.start;
+	q3Vec3 p1 = p0 + rayCast.dir * rayCast.t;
 
 	while( sp )
 	{

@@ -24,9 +24,9 @@
 */
 //--------------------------------------------------------------------------------------------------
 
-#include "q3Collide.h"
-#include "../dynamics/q3Body.h"
-#include "../dynamics/q3Contact.h"
+#include <qu3e/collision/q3Collide.h>
+#include <qu3e/dynamics/q3Body.h>
+#include <qu3e/dynamics/q3Contact.h>
 
 //--------------------------------------------------------------------------------------------------
 // qBoxtoBox

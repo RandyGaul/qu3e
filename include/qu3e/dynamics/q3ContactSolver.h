@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------------------------
 /**
-@file	q3Contact.cpp
+@file	q3ContactSolver.h
 
 @author	Randy Gaul
 @date	10/10/2014
@@ -24,44 +24,62 @@
 */
 //--------------------------------------------------------------------------------------------------
 
-#include <qu3e/dynamics/q3Contact.h>
+#ifndef Q3CONTACTSOLVER_H
+#define Q3CONTACTSOLVER_H
+
+#include <qu3e/math/q3Math.h>
+#include <qu3e/common/q3Settings.h>
 
 //--------------------------------------------------------------------------------------------------
-// q3Contact
+// q3ContactSolver
 //--------------------------------------------------------------------------------------------------
-void q3Manifold::SetPair( q3Box *a, q3Box *b )
+struct q3Island;
+struct q3VelocityState;
+
+struct q3ContactState
 {
-	A = a;
-	B = b;
+	q3Vec3 ra;					// Vector from C.O.M to contact position
+	q3Vec3 rb;					// Vector from C.O.M to contact position
+	r32 penetration;			// Depth of penetration from collision
+	r32 normalImpulse;			// Accumulated normal impulse
+	r32 tangentImpulse[ 2 ];	// Accumulated friction impulse
+	r32 bias;					// Restitution + baumgarte
+	r32 normalMass;				// Normal constraint mass
+	r32 tangentMass[ 2 ];		// Tangent constraint mass
+};
 
-	sensor = A->sensor || B->sensor;
-}
-
-// Generate contact information
-void q3ContactConstraint::SolveCollision( void )
+struct q3ContactConstraintState
 {
-	manifold.contactCount = 0;
+	q3ContactState contacts[ 8 ];
+	i32 contactCount;
+	q3Vec3 tangentVectors[ 2 ];	// Tangent vectors
+	q3Vec3 normal;				// From A to B
+	q3Vec3 centerA;
+	q3Vec3 centerB;
+	q3Mat3 iA;
+	q3Mat3 iB;
+	r32 mA;
+	r32 mB;
+	r32 restitution;
+	r32 friction;
+	i32 indexA;
+	i32 indexB;
+};
 
-	q3BoxtoBox( &manifold, A, B );
+struct q3ContactSolver
+{
+	void Initialize( q3Island *island );
+	void ShutDown( void );
 
-	if ( manifold.contactCount > 0 )
-	{
-		if ( m_flags & eColliding )
-			m_flags |= eWasColliding;
+	void PreSolve( r32 dt );
+	void Solve( void );
 
-		else
-			m_flags |= eColliding;
-	}
+	q3Island *m_island;
+	q3ContactConstraintState *m_contacts;
+	i32 m_contactCount;
+	q3VelocityState *m_velocities;
 
-	else
-	{
-		if ( m_flags & eColliding )
-		{
-			m_flags &= ~eColliding;
-			m_flags |= eWasColliding;
-		}
+	bool m_enableFriction;
+};
 
-		else
-			m_flags &= ~eWasColliding;
-	}
-}
+#endif // Q3CONTACTSOLVER_H

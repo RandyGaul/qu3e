@@ -24,10 +24,10 @@
 */
 //--------------------------------------------------------------------------------------------------
 
-#include "q3BroadPhase.h"
-#include "../collision/q3Box.h"
-#include "../common/q3Geometry.h"
-#include "../dynamics/q3ContactManager.h"
+#include <qu3e/broadphase/q3BroadPhase.h>
+#include <qu3e/collision/q3Box.h>
+#include <qu3e/common/q3Geometry.h>
+#include <qu3e/dynamics/q3ContactManager.h>
 
 //--------------------------------------------------------------------------------------------------
 // q3BroadPhase

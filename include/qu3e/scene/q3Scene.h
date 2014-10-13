@@ -27,9 +27,9 @@
 #ifndef Q3SCENE_H
 #define Q3SCENE_H
 
-#include "../common/q3Settings.h"
-#include "../common/q3Memory.h"
-#include "../dynamics/q3ContactManager.h"
+#include <qu3e/common/q3Settings.h>
+#include <qu3e/common/q3Memory.h>
+#include <qu3e/dynamics/q3ContactManager.h>
 
 //--------------------------------------------------------------------------------------------------
 // q3Scene

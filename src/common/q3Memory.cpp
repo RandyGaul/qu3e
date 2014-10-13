@@ -27,8 +27,8 @@
 #include <cassert>
 #include <cstdio>
 
-#include "q3Memory.h"
-#include "../math/q3Math.h"
+#include <qu3e/common/q3Memory.h>
+#include <qu3e/math/q3Math.h>
 
 //--------------------------------------------------------------------------------------------------
 // q3Stack

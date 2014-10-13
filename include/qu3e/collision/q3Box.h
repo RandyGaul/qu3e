@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------------------------
 /**
-@file	q3Memory.h
+@file	q3Box.h
 
 @author	Randy Gaul
 @date	10/10/2014
@@ -24,124 +24,87 @@
 */
 //--------------------------------------------------------------------------------------------------
 
-#ifndef Q3MEMORY_H
-#define Q3MEMORY_H
+#ifndef Q3BOX_H
+#define Q3BOX_H
 
-#include <malloc.h>
-
-#include "q3Types.h"
-
-//--------------------------------------------------------------------------------------------------
-// Memory Macros
-//--------------------------------------------------------------------------------------------------
-#define Q3_PTR_ADD( P, BYTES ) \
-	(decltype( P )(((u8 *)P) + (BYTES)))
+#include <qu3e/math/q3Vec3.h>
+#include <qu3e/math/q3Mat3.h>
+#include <qu3e/math/q3Transform.h>
+#include <qu3e/debug/q3Render.h>
 
 //--------------------------------------------------------------------------------------------------
-// q3Stack
+// q3MassData
 //--------------------------------------------------------------------------------------------------
-// 1MB stack size
-const i32 q3k_stackSize = 1024 * 1024 * 20;
-
-class q3Stack
+struct q3MassData
 {
-private:
-	struct q3StackEntry
-	{
-		u8 *data;
-		i32 size;
-	};
-
-public:
-	q3Stack( );
-	~q3Stack( );
-
-	void *Allocate( i32 size );
-	void Free( void *data );
-
-private:
-	u8 m_memory[ q3k_stackSize ];
-	q3StackEntry* m_entries;
-
-	i32 m_index;
-
-	i32 m_allocation;
-	i32 m_entryCount;
-	i32 m_entryCapacity;
+	q3Mat3 inertia;
+	q3Vec3 center;
+	r32 mass;
 };
 
 //--------------------------------------------------------------------------------------------------
-// q3Heap
+// q3Box
 //--------------------------------------------------------------------------------------------------
-// 1 MB heap size
-const i32 q3k_heapSize = 1024 * 1024 * 20;
-const i32 q3k_heapInitialCapacity = 1024;
-
-// Operates on first fit basis in attempt to improve cache coherency
-class q3Heap
+struct q3Box
 {
-private:
-	struct q3Header
-	{
-		q3Header* next;
-		q3Header* prev;
-		i32 size;
-	};
+	q3Transform local;
+	q3Vec3 e;
 
-	struct q3FreeBlock
-	{
-		q3Header* header;
-		i32 size;
-	};
+	q3Box* next;
+	class q3Body* body;
+	r32 friction;
+	r32 restitution;
+	r32 density;
+	i32 broadPhaseIndex;
+	mutable void* userData;
+	mutable bool sensor;
 
-public:
-	q3Heap( );
-	~q3Heap( );
+	void SetUserdata( void* data ) const;
+	void* GetUserdata( ) const;
+	void SetSensor( bool isSensor );
 
-	void *Allocate( i32 size );
-	void Free( void *memory );
-
-private:
-	q3Header* m_memory;
-
-	q3FreeBlock* m_freeBlocks;
-	i32 m_freeBlockCount;
-	i32 m_freeBlockCapacity;
+	bool TestPoint( const q3Transform& tx, const q3Vec3& p ) const;
+	bool Raycast( const q3Transform& tx, q3RaycastData* raycast ) const;
+	void ComputeAABB( const q3Transform& tx, q3AABB* aabb ) const;
+	void ComputeMass( q3MassData* md ) const;
+	void Render( const q3Transform& tx, bool awake, q3Render* render ) const;
 };
 
 //--------------------------------------------------------------------------------------------------
-// q3PagedAllocator
+// q3BoxDef
 //--------------------------------------------------------------------------------------------------
-class q3PagedAllocator
+class q3BoxDef
 {
-	struct q3Block
-	{
-		q3Block* next;
-	};
-
-	struct q3Page
-	{
-		q3Page* next;
-		q3Block* data;
-	};
-
 public:
-	q3PagedAllocator( i32 elementSize, i32 elementsPerPage );
-	~q3PagedAllocator( );
+	q3BoxDef( )
+	{
+		// Common default values
+		m_friction = r32( 0.4 );
+		m_restitution = r32( 0.2 );
+		m_density = r32( 1.0 );
+		m_sensor = false;
+	}
 
-	void* Allocate( );
-	void Free( void* data );
+	void Set( const q3Transform& tx, const q3Vec3& extents );
 
-	void Clear( );
+	void SetFriction( r32 friction );
+	void SetRestitution( r32 restitution );
+	void SetDensity( r32 density );
+	void SetSensor( bool sensor );
 
 private:
-	i32 m_blockSize;
-	i32 m_blocksPerPage;
+	q3Transform m_tx;
+	q3Vec3 m_e;
 
-	q3Page *m_pages;
-	i32 m_pageCount;
+	r32 m_friction;
+	r32 m_restitution;
+	r32 m_density;
+	bool m_sensor;
 
-	q3Block *m_freeList;
+	friend class q3Body;
 };
 
-#endif // Q3MEMORY_H
+#include <qu3e/collision/q3Box.inl>
+
+
+#endif // Q3BOX_H

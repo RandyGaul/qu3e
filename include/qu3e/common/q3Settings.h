@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------------------------
 /**
-@file	q3ContactSolver.h
+@file	q3Settings.h
 
 @author	Randy Gaul
 @date	10/10/2014
@@ -24,62 +24,21 @@
 */
 //--------------------------------------------------------------------------------------------------
 
-#ifndef Q3CONTACTSOLVER_H
-#define Q3CONTACTSOLVER_H
+#ifndef Q3SETTINGS_H
+#define Q3SETTINGS_H
 
-#include "../math/q3Math.h"
-#include "../common/q3Settings.h"
-
+#include <qu3e/math/q3Math.h>
 //--------------------------------------------------------------------------------------------------
-// q3ContactSolver
+// Internal Implementation Constants (do not change unless you know what you're doing)
 //--------------------------------------------------------------------------------------------------
-struct q3Island;
-struct q3VelocityState;
+#define Q3_SLEEP_LINEAR r32( 0.01 )
 
-struct q3ContactState
-{
-	q3Vec3 ra;					// Vector from C.O.M to contact position
-	q3Vec3 rb;					// Vector from C.O.M to contact position
-	r32 penetration;			// Depth of penetration from collision
-	r32 normalImpulse;			// Accumulated normal impulse
-	r32 tangentImpulse[ 2 ];	// Accumulated friction impulse
-	r32 bias;					// Restitution + baumgarte
-	r32 normalMass;				// Normal constraint mass
-	r32 tangentMass[ 2 ];		// Tangent constraint mass
-};
+#define Q3_SLEEP_ANGULAR r32( (3.0 / 180.0) * q3PI )
 
-struct q3ContactConstraintState
-{
-	q3ContactState contacts[ 8 ];
-	i32 contactCount;
-	q3Vec3 tangentVectors[ 2 ];	// Tangent vectors
-	q3Vec3 normal;				// From A to B
-	q3Vec3 centerA;
-	q3Vec3 centerB;
-	q3Mat3 iA;
-	q3Mat3 iB;
-	r32 mA;
-	r32 mB;
-	r32 restitution;
-	r32 friction;
-	i32 indexA;
-	i32 indexB;
-};
+#define Q3_SLEEP_TIME r32( 0.5 )
 
-struct q3ContactSolver
-{
-	void Initialize( q3Island *island );
-	void ShutDown( void );
+#define Q3_BAUMGARTE r32( 0.2 )
 
-	void PreSolve( r32 dt );
-	void Solve( void );
+#define Q3_PENETRATION_SLOP r32( 0.05 )
 
-	q3Island *m_island;
-	q3ContactConstraintState *m_contacts;
-	i32 m_contactCount;
-	q3VelocityState *m_velocities;
-
-	bool m_enableFriction;
-};
-
-#endif // Q3CONTACTSOLVER_H
+#endif // Q3SETTINGS_H

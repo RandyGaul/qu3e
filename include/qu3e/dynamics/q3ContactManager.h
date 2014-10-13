@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------------------------
 /**
-@file	q3Island.h
+@file	q3ContactManager.h
 
 @author	Randy Gaul
 @date	10/10/2014
@@ -24,50 +24,62 @@
 */
 //--------------------------------------------------------------------------------------------------
 
-#ifndef Q3ISLAND_H
-#define Q3ISLAND_H
+#ifndef Q3CONTACTMANAGER_H
+#define Q3CONTACTMANAGER_H
 
-#include "../math/q3Math.h"
-#include "../common/q3Geometry.h"
-#include "../common/q3Settings.h"
+#include <qu3e/common/q3Types.h>
+#include <qu3e/broadphase/q3BroadPhase.h>
+#include <qu3e/common/q3Memory.h>
 
 //--------------------------------------------------------------------------------------------------
-// q3Island
+// q3ContactManager
 //--------------------------------------------------------------------------------------------------
-class q3BroadPhase;
-class q3Body;
 struct q3ContactConstraint;
-struct q3ContactConstraintState;
+class q3ContactListener;
+struct q3Box;
+class q3Body;
+class q3Render;
+class q3Stack;
 
-struct q3VelocityState
+class q3ContactManager
 {
-	q3Vec3 w;
-	q3Vec3 v;
-};
+public:
+	q3ContactManager( q3Stack* stack );
 
-struct q3Island
-{
-	void Solve( );
-	void Add( q3Body *body );
-	void Add( q3ContactConstraint *contact );
-	void Initialize( );
+	// Add a new contact constraint for a pair of objects
+	// unless the contact constraint already exists
+	void AddContact( q3Box *A, q3Box *B );
 
-	q3Body **m_bodies;
-	q3VelocityState *m_velocities;
-	i32 m_bodyCapacity;
-	i32 m_bodyCount;
+	// Has broadphase find all contacts and call AddContact on the
+	// ContactManager for each pair found
+	void FindNewContacts( void );
 
-	q3ContactConstraint **m_contacts;
-	q3ContactConstraintState *m_contactStates;
+	// Remove a specific contact
+	void RemoveContact( q3ContactConstraint *contact );
+
+	// Remove all contacts from a body
+	void RemoveContactsFromBody( q3Body *body );
+	void RemoveFromBroadphase( q3Body *body );
+
+	// Remove contacts without broadphase overlap
+	// Solves contact manifolds
+	void TestCollisions( void );
+	static void SolveCollision( void* param );
+
+	void RenderContacts( q3Render* debugDrawer ) const;
+
+private:
+	q3ContactConstraint* m_contactList;
 	i32 m_contactCount;
-	i32 m_contactCapacity;
+	q3Stack* m_stack;
+	q3PagedAllocator m_allocator;
+	q3BroadPhase m_broadphase;
+	q3ContactListener *m_contactListener;
 
-	r32 m_dt;
-	q3Vec3 m_gravity;
-	i32 m_iterations;
-
-	bool m_allowSleep;
-	bool m_enableFriction;
+	friend class q3BroadPhase;
+	friend class q3Scene;
+	friend struct q3Box;
+	friend class q3Body;
 };
 
-#endif // Q3ISLAND_H
+#endif // Q3CONTACTMANAGER_H

@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------------------------
 /**
-@file	q3Vec3.h
+@file	q3Island.h
 
 @author	Randy Gaul
 @date	10/10/2014
@@ -24,53 +24,50 @@
 */
 //--------------------------------------------------------------------------------------------------
 
-#ifndef Q3VEC3_H
-#define Q3VEC3_H
+#ifndef Q3ISLAND_H
+#define Q3ISLAND_H
 
-#include "../common/q3Types.h"
-
-r32 q3Abs( r32 a );
-r32 q3Min( r32 a, r32 b );
-r32 q3Max( r32 a, r32 b );
+#include <qu3e/math/q3Math.h>
+#include <qu3e/common/q3Geometry.h>
+#include <qu3e/common/q3Settings.h>
 
 //--------------------------------------------------------------------------------------------------
-// q3Vec3
+// q3Island
 //--------------------------------------------------------------------------------------------------
-struct q3Vec3
+class q3BroadPhase;
+class q3Body;
+struct q3ContactConstraint;
+struct q3ContactConstraintState;
+
+struct q3VelocityState
 {
-	union
-	{
-		r32 v[ 3 ];
-
-		struct
-		{
-			r32 x;
-			r32 y;
-			r32 z;
-		};
-	};
-
-	q3Vec3( );
-	q3Vec3( r32 _x, r32 _y, r32 _z );
-
-	void Set( r32 _x, r32 _y, r32 _z );
-	void SetAll( r32 a );
-	q3Vec3& operator+=( const q3Vec3& rhs );
-	q3Vec3& operator-=( const q3Vec3& rhs );
-	q3Vec3& operator*=( r32 f );
-	q3Vec3& operator/=( r32 f );
-
-	r32& operator[]( u32 i );
-	r32 operator[]( u32 i ) const;
-
-	q3Vec3 operator-( void ) const;
-
-	const q3Vec3 operator+( const q3Vec3& rhs ) const;
-	const q3Vec3 operator-( const q3Vec3& rhs ) const;
-	const q3Vec3 operator*( r32 f ) const;
-	const q3Vec3 operator/( r32 f ) const;
+	q3Vec3 w;
+	q3Vec3 v;
 };
 
-#include "q3Vec3.inl"
+struct q3Island
+{
+	void Solve( );
+	void Add( q3Body *body );
+	void Add( q3ContactConstraint *contact );
+	void Initialize( );
 
-#endif // Q3VEC3_H
+	q3Body **m_bodies;
+	q3VelocityState *m_velocities;
+	i32 m_bodyCapacity;
+	i32 m_bodyCount;
+
+	q3ContactConstraint **m_contacts;
+	q3ContactConstraintState *m_contactStates;
+	i32 m_contactCount;
+	i32 m_contactCapacity;
+
+	r32 m_dt;
+	q3Vec3 m_gravity;
+	i32 m_iterations;
+
+	bool m_allowSleep;
+	bool m_enableFriction;
+};
+
+#endif // Q3ISLAND_H

@@ -27,10 +27,10 @@
 #ifndef Q3CONTACT_H
 #define Q3CONTACT_H
 
-#include "../math/q3Math.h"
-#include "../common/q3Settings.h"
-#include "../collision/q3Box.h"
-#include "../collision/q3Collide.h"
+#include <qu3e/math/q3Math.h>
+#include <qu3e/common/q3Settings.h>
+#include <qu3e/collision/q3Box.h>
+#include <qu3e/collision/q3Collide.h>
 
 //--------------------------------------------------------------------------------------------------
 // q3Contact

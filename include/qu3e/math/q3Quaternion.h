@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------------------------
 /**
-@file	q3Math.h
+@file	q3Quaternion.h
 
 @author	Randy Gaul
 @date	10/10/2014
@@ -24,26 +24,71 @@
 */
 //--------------------------------------------------------------------------------------------------
 
-#ifndef Q3MATH_H
-#define Q3MATH_H
+#ifndef Q3QUATERNION_H
+#define Q3QUATERNION_H
 
-#include <cmath>		// abs, sqrt
-#include <cassert>		// assert
-#include <algorithm>	// max, min
-
-#include "../common/q3Types.h"
+#include <qu3e/common/q3Types.h>
+#include <qu3e/math/q3Vec3.h>
 
 //--------------------------------------------------------------------------------------------------
-// q3Math
+// q3Quaternion
 //--------------------------------------------------------------------------------------------------
-#define Q3_R32_MAX FLT_MAX
+struct q3Mat3;
 
-const r32 q3PI = r32( 3.14159265 );
+class q3Quaternion
+{
+public:
+	union
+	{
+		r32 v[ 4 ];
 
-#include "q3Vec3.h"
-#include "q3Mat3.h"
-#include "q3Quaternion.h"
+		struct
+		{
+			r32 x;
+			r32 y;
+			r32 z;
 
-#include "q3Math.inl"
+			r32 w;
+		};
+	};
 
-#endif // Q3MATH_H
+	q3Quaternion( );
+	q3Quaternion( r32 a, r32 b, r32 c, r32 d );
+	q3Quaternion( const q3Vec3& axis, r32 radians );
+
+	void Set( const q3Vec3& axis, r32 radians );
+	void Integrate( const q3Vec3& dv, r32 dt );
+
+	const q3Quaternion operator*( const q3Quaternion& rhs ) const;
+	q3Quaternion& operator*=( const q3Quaternion& rhs );
+
+	const q3Mat3 ToMat3( void ) const;
+};
+
+//--------------------------------------------------------------------------------------------------
+inline const q3Quaternion q3Normalize( const q3Quaternion& q )
+{
+	r32 x = q.x;
+	r32 y = q.y;
+	r32 z = q.z;
+	r32 w = q.w;
+
+	r32 d = q.w * q.w + q.x * q.x + q.y * q.y + q.z * q.z;
+
+	if( d == 0 )
+		w = r32( 1.0 );
+
+	d = r32( 1.0 ) / std::sqrt( d );
+
+	if ( d > r32( 1.0e-8 ) )
+	{
+		x *= d;
+		y *= d;
+		z *= d;
+		w *= d;
+	}
+
+	return q3Quaternion( x, y, z, w );
+}
+
+#endif // Q3QUATERNION_H

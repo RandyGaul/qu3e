@@ -27,8 +27,8 @@
 #ifndef Q3BROADPHASE_H
 #define Q3BROADPHASE_H
 
-#include "../common/q3Types.h"
-#include "q3DynamicAABBTree.h"
+#include <qu3e/common/q3Types.h>
+#include <qu3e/broadphase/q3DynamicAABBTree.h>
 
 //--------------------------------------------------------------------------------------------------
 // q3BroadPhase

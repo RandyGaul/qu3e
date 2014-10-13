@@ -1,6 +1,6 @@
 //--------------------------------------------------------------------------------------------------
 /**
-@file	q3Quaternion.h
+@file	q3Vec3.h
 
 @author	Randy Gaul
 @date	10/10/2014
@@ -24,71 +24,53 @@
 */
 //--------------------------------------------------------------------------------------------------
 
-#ifndef Q3QUATERNION_H
-#define Q3QUATERNION_H
+#ifndef Q3VEC3_H
+#define Q3VEC3_H
 
-#include "../common/q3Types.h"
-#include "q3Vec3.h"
+#include <qu3e/common/q3Types.h>
+
+r32 q3Abs( r32 a );
+r32 q3Min( r32 a, r32 b );
+r32 q3Max( r32 a, r32 b );
 
 //--------------------------------------------------------------------------------------------------
-// q3Quaternion
+// q3Vec3
 //--------------------------------------------------------------------------------------------------
-struct q3Mat3;
-
-class q3Quaternion
+struct q3Vec3
 {
-public:
 	union
 	{
-		r32 v[ 4 ];
+		r32 v[ 3 ];
 
 		struct
 		{
 			r32 x;
 			r32 y;
 			r32 z;
-
-			r32 w;
 		};
 	};
 
-	q3Quaternion( );
-	q3Quaternion( r32 a, r32 b, r32 c, r32 d );
-	q3Quaternion( const q3Vec3& axis, r32 radians );
+	q3Vec3( );
+	q3Vec3( r32 _x, r32 _y, r32 _z );
 
-	void Set( const q3Vec3& axis, r32 radians );
-	void Integrate( const q3Vec3& dv, r32 dt );
+	void Set( r32 _x, r32 _y, r32 _z );
+	void SetAll( r32 a );
+	q3Vec3& operator+=( const q3Vec3& rhs );
+	q3Vec3& operator-=( const q3Vec3& rhs );
+	q3Vec3& operator*=( r32 f );
+	q3Vec3& operator/=( r32 f );
 
-	const q3Quaternion operator*( const q3Quaternion& rhs ) const;
-	q3Quaternion& operator*=( const q3Quaternion& rhs );
+	r32& operator[]( u32 i );
+	r32 operator[]( u32 i ) const;
 
-	const q3Mat3 ToMat3( void ) const;
+	q3Vec3 operator-( void ) const;
+
+	const q3Vec3 operator+( const q3Vec3& rhs ) const;
+	const q3Vec3 operator-( const q3Vec3& rhs ) const;
+	const q3Vec3 operator*( r32 f ) const;
+	const q3Vec3 operator/( r32 f ) const;
 };
 
-//--------------------------------------------------------------------------------------------------
-inline const q3Quaternion q3Normalize( const q3Quaternion& q )
-{
-	r32 x = q.x;
-	r32 y = q.y;
-	r32 z = q.z;
-	r32 w = q.w;
+#include <qu3e/math/q3Vec3.inl>
 
-	r32 d = q.w * q.w + q.x * q.x + q.y * q.y + q.z * q.z;
-
-	if( d == 0 )
-		w = r32( 1.0 );
-
-	d = r32( 1.0 ) / std::sqrt( d );
-
-	if ( d > r32( 1.0e-8 ) )
-	{
-		x *= d;
-		y *= d;
-		z *= d;
-		w *= d;
-	}
-
-	return q3Quaternion( x, y, z, w );
-}
-
-#endif // Q3QUATERNION_H
+#endif // Q3VEC3_H

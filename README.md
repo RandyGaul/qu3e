@@ -51,10 +51,9 @@ A rigid body is created from a physics scene, and rigid bodies (or shapes) canno
 
 The **q3BodyDef** can be passed to a scene in return for a new rigid body. The body definition lets the user specify many settings. See q3Body.h for details. Once a rigid body is constructed any number of boxes can be added to it by providing the body with a **q3BoxDef**:
 
-    q3BoxDef boxDef;
+    q3BoxDef boxDef; // See q3Box.h for settings details
 	q3Transform worldSpace; // Contains position and orientation, see q3Transform.h for details
-	q3Identity( worldSpace );
-	q3Identity( worldSpace.rotation ); // Specify the origin, and identity orientation
+	q3Identity( worldSpace ); // Specify the origin, and identity orientation
 	
 	// Create a box at the origin with width, height, depth = (1.0, 1.0, 1.0)
 	// and add it to a rigid body

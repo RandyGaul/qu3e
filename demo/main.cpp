@@ -30,7 +30,7 @@
 #endif
 #include "glut.h"
 #include "Clock.h"
-#include "../src/q3.h"
+#include <qu3e/q3.h>
 
 #define ESC_KEY 27
 

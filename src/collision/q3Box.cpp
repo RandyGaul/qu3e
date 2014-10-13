@@ -77,7 +77,7 @@ void q3Box::ComputeMass( q3MassData* md ) const
 	// Calculate inertia tensor
 	r32 ex2 = r32( 4.0 ) * e.x * e.x;
 	r32 ey2 = r32( 4.0 ) * e.y * e.y;
-	r32 ez2 = r32( 4.0 ) * e.y * e.y;
+	r32 ez2 = r32( 4.0 ) * e.z * e.z;
 	r32 mass = r32( 8.0 ) * e.x * e.y * e.z * density;
 	r32 x = r32( 1.0 / 12.0 ) * mass * (ey2 + ez2);
 	r32 y = r32( 1.0 / 12.0 ) * mass * (ex2 + ez2);

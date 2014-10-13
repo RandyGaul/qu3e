@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\broadphase\q3BroadPhase.cpp" />
+    <ClCompile Include="..\src\broadphase\q3DynamicAABBTree.cpp" />
+    <ClCompile Include="..\src\collision\q3Box.cpp" />
+    <ClCompile Include="..\src\collision\q3Collide.cpp" />
+    <ClCompile Include="..\src\common\q3Geometry.cpp" />
+    <ClCompile Include="..\src\common\q3Memory.cpp" />
+    <ClCompile Include="..\src\dynamics\q3Body.cpp" />
+    <ClCompile Include="..\src\dynamics\q3Contact.cpp" />
+    <ClCompile Include="..\src\dynamics\q3ContactManager.cpp" />
+    <ClCompile Include="..\src\dynamics\q3ContactSolver.cpp" />
+    <ClCompile Include="..\src\dynamics\q3Island.cpp" />
+    <ClCompile Include="..\src\math\q3Mat3.cpp" />
+    <ClCompile Include="..\src\math\q3Quaternion.cpp" />
+    <ClCompile Include="..\src\math\q3Vec3.cpp" />
+    <ClCompile Include="..\src\scene\q3Scene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\broadphase\q3BroadPhase.h" />
+    <ClInclude Include="..\src\broadphase\q3DynamicAABBTree.h" />
+    <ClInclude Include="..\src\collision\q3Collide.h" />
+    <ClInclude Include="..\src\collision\q3Box.h" />
+    <ClInclude Include="..\src\common\q3Geometry.h" />
+    <ClInclude Include="..\src\common\q3Memory.h" />
+    <ClInclude Include="..\src\common\q3Settings.h" />
+    <ClInclude Include="..\src\common\q3Types.h" />
+    <ClInclude Include="..\src\debug\q3Render.h" />
+    <ClInclude Include="..\src\dynamics\q3Body.h" />
+    <ClInclude Include="..\src\dynamics\q3Contact.h" />
+    <ClInclude Include="..\src\dynamics\q3ContactManager.h" />
+    <ClInclude Include="..\src\dynamics\q3ContactSolver.h" />
+    <ClInclude Include="..\src\dynamics\q3Island.h" />
+    <ClInclude Include="..\src\math\q3Mat3.h" />
+    <ClInclude Include="..\src\math\q3Math.h" />
+    <ClInclude Include="..\src\math\q3Quaternion.h" />
+    <ClInclude Include="..\src\math\q3Transform.h" />
+    <ClInclude Include="..\src\math\q3Vec3.h" />
+    <ClInclude Include="..\src\q3.h" />
+    <ClInclude Include="..\src\scene\q3Scene.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\src\broadphase\q3DynamicAABBTree.inl" />
+    <None Include="..\src\collision\q3Box.inl" />
+    <None Include="..\src\common\q3Geometry.inl" />
+    <None Include="..\src\math\q3Mat3.inl" />
+    <None Include="..\src\math\q3Math.inl" />
+    <None Include="..\src\math\q3Transform.inl" />
+    <None Include="..\src\math\q3Vec3.inl" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{4C7D07CB-EF73-43C4-846C-BABFE3B71E02}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>qu3e</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

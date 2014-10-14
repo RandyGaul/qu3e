@@ -71,7 +71,7 @@ FAQ
 
 <b>Can you add in this feature?</b>
 
-One of the main goals is to keep the feature list low in order to control code bloat, complexity, and the API itself. If a more full-featured open source physics library is desired please see the Bullet physics engine. That said I'm always open to new ideas. Please use the github "issues" facility to suggest or discuss improvements.
+One of the main goals is to keep the feature list low in order to control code bloat, complexity, and the API itself. If a more full-featured open source physics library is desired please see the Bullet physics engine. That said I'm always open to new ideas. Please use the github "issues" facility to suggest or discuss improvements -- I'll happily respond as time permits.
 
 <b>I've found a bug. How should I report it, or can I fix it myself?</b>
 
@@ -85,7 +85,7 @@ As far as I'm aware there aren't *any* simple and fast open source modern 3D phy
 
 Making use of various C++ features or external C++ libraries adds to the dependencies of the whole project. The idea is that if simple C-like code is pervasive then porting to other languages becomes simple. Just because a feature exists does not warrant its use.
 
-<b>What collision shapes are supported</b>
+<b>What collision shapes are supported?</b>
 
 Currently just boxes (width, height, depth). Spheres and capsules may be added in the future depending on if users request them. Currently any number of boxes can be used to construct an aggregate rigid body -- this assuages most collision desires that many users have.
 

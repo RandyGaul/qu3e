@@ -66,6 +66,29 @@ The **q3BodyDef** can be passed to a scene in return for a new rigid body. The b
 	
 To simulate the scene simply call **scene.Step( )**. This will simulate the world forward in time by the timestep specified at the scene's construction (usually 1/60 or 1/30).
 
+FAQ
+---
+
+<b>Can you add in this feature?</b>
+
+One of the main goals is to keep the feature list low in order to control code bloat, complexity, and the API itself. If a more full-featured open source physics library is desired please see the Bullet physics engine. That said I'm always open to new ideas. Please use the github "issues" facility to suggest or discuss improvements.
+
+<b>I've found a bug. How should I report it, or can I fix it myself?</b>
+
+If you feel up for fixing bugs please do add a pull request and I'll do my best to look over and merge the request. Otherwise the github "issues" facility is great for reporting and discussing bugs.
+
+<b>What are the pros and cons of using your library over something like Bullet, Havok or ODE?</b>
+
+As far as I'm aware there aren't *any* simple and fast open source modern 3D physics engines. Hopefully qu3e can fill in this type of role with pros such as: small library, easily ported to other languages, free, consistent implementation style, minimal to no dependencies. The only cons of qu3e over other engines would be small feature list, but whether this is a significant con depends on the needs of the user.
+
+<b>Why don't you use this (insert C++ feature/library/tool) within your code?</b>
+
+Making use of various C++ features or external C++ libraries adds to the dependencies of the whole project. The idea is that if simple C-like code is pervasive then porting to other languages becomes simple. Just because a feature exists does not warrant its use.
+
+<b>What collision shapes are supported</b>
+
+Currently just boxes (width, height, depth). Spheres and capsules may be added in the future depending on if users request them. Currently any number of boxes can be used to construct an aggregate rigid body -- this assuages most collision desires that many users have.
+
 Future
 ------
 

@@ -28,3 +28,10 @@
 *.lib
 *.a
 *.sln
+*.bin
+*.vcxproj
+*.vcxproj.filters
+*.cmake
+*.stamp
+*.depend
+*.list

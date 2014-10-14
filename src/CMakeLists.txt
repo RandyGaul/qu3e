@@ -62,6 +62,7 @@ set(qu3e_math_srcs
 set(qu3e_math_hdrs
 	math/q3Mat3.h
 	math/q3Mat3.inl
+	math/q3Math.h
 	math/q3Math.inl
 	math/q3Quaternion.h
 	math/q3Transform.h

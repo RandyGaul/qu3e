@@ -1,5 +1,0 @@
-C:/Users/Randy/Desktop/MyProjects/qu3e/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/Randy/Desktop/MyProjects/qu3e/build/CMakeFiles/ZERO_CHECK.dir
-C:/Users/Randy/Desktop/MyProjects/qu3e/build/demo/CMakeFiles/demo.dir
-C:/Users/Randy/Desktop/MyProjects/qu3e/build/freeglut/CMakeFiles/freeglut_static.dir
-C:/Users/Randy/Desktop/MyProjects/qu3e/build/src/CMakeFiles/qu3e.dir

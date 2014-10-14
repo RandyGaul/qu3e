@@ -27,6 +27,7 @@
 #ifndef Q3MATH_H
 #define Q3MATH_H
 
+#include <float.h>		// FLT_MAX
 #include <cmath>		// abs, sqrt
 #include <cassert>		// assert
 #include <algorithm>	// max, min

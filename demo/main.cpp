@@ -28,7 +28,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #endif
-#include "glut.h"
+#include "../freeglut/freeglut.h"
 #include "Clock.h"
 #include "../src/q3.h"
 

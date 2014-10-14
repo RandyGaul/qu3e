@@ -21,3 +21,10 @@
 *.unsuccessfulbuild
 *.cache
 *.idb
+*.vcproj
+*.vcproj.filters
+*.dll
+*.so
+*.lib
+*.a
+*.sln

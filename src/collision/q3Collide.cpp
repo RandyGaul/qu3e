@@ -307,7 +307,7 @@ i32 q3Orthographic( r32 sign, r32 e, i32 axis, i32 clipEdge, q3ClipVertex* in, i
 		q3ClipVertex cv;
 
 		// B
-		if ( (InFront( da ) && InFront( db ) || On( da ) || On( db )) )
+		if ( ((InFront( da ) && InFront( db )) || On( da ) || On( db )) )
 		{
 			assert( outCount < 8 );
 			out[ outCount++ ] = b;

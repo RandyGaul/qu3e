@@ -41,9 +41,9 @@ inline const q3Mat3 q3Rotate( const q3Vec3& x, const q3Vec3& y, const q3Vec3& z 
 inline const q3Mat3 q3Transpose( const q3Mat3& m )
 {
 	return q3Mat3(
-		m.x.x, m.y.x, m.z.x,
-		m.x.y, m.y.y, m.z.y,
-		m.x.z, m.y.z, m.z.z
+		m.ex.x, m.ey.x, m.ez.x,
+		m.ex.y, m.ey.y, m.ez.y,
+		m.ex.z, m.ey.z, m.ez.z
 		);
 }
 
@@ -130,11 +130,11 @@ inline const q3Mat3 q3Inverse( const q3Mat3& m )
 	q3Vec3 tmp0, tmp1, tmp2;
 	r32 detinv;
 
-	tmp0 = q3Cross( m.y, m.z );
-	tmp1 = q3Cross( m.z, m.x );
-	tmp2 = q3Cross( m.x, m.y );
+	tmp0 = q3Cross( m.ey, m.ez );
+	tmp1 = q3Cross( m.ez, m.ex );
+	tmp2 = q3Cross( m.ex, m.ey );
 
-	detinv = r32( 1.0 ) / q3Dot( m.z, tmp2 );
+	detinv = r32( 1.0 ) / q3Dot( m.ez, tmp2 );
 
 	return q3Mat3(
 		tmp0.x * detinv, tmp1.x * detinv, tmp2.x * detinv,

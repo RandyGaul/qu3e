@@ -36,29 +36,9 @@
 //--------------------------------------------------------------------------------------------------
 struct q3Mat3
 {
-	union
-	{
-		struct
-		{
-			r32 m00, m01, m02;
-			r32 m10, m11, m12;
-			r32 m20, m21, m22;
-		};
-
-		struct
-		{
-			q3Vec3 x;
-			q3Vec3 y;
-			q3Vec3 z;
-		};
-
-		struct
-		{
-			q3Vec3 m[ 3 ];
-		};
-
-		r32 v[ 9 ];
-	};
+	q3Vec3 ex;
+	q3Vec3 ey;
+	q3Vec3 ez;
 
 	q3Mat3( );
 	q3Mat3( r32 a, r32 b, r32 c, r32 d, r32 e, r32 f, r32 g, r32 h, r32 i );

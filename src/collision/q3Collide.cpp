@@ -96,7 +96,7 @@ void q3ComputeReferenceEdgesAndBasis( const q3Vec3& eR, const q3Transform& rtx, 
 			out[ 3 ] = 9;
 
 			e->Set( eR.y, eR.z, eR.x );
-			basis->SetRows( rtx.rotation.y, rtx.rotation.z, rtx.rotation.x );
+			basis->SetRows( rtx.rotation.ey, rtx.rotation.ez, rtx.rotation.ex );
 		}
 
 		else
@@ -107,7 +107,7 @@ void q3ComputeReferenceEdgesAndBasis( const q3Vec3& eR, const q3Transform& rtx, 
 			out[ 3 ] = 5;
 
 			e->Set( eR.z, eR.y, eR.x );
-			basis->SetRows( rtx.rotation.z, rtx.rotation.y, -rtx.rotation.x );
+			basis->SetRows( rtx.rotation.ez, rtx.rotation.ey, -rtx.rotation.ex );
 		}
 		break;
 
@@ -120,7 +120,7 @@ void q3ComputeReferenceEdgesAndBasis( const q3Vec3& eR, const q3Transform& rtx, 
 			out[ 3 ] = 3;
 
 			e->Set( eR.z, eR.x, eR.y );
-			basis->SetRows( rtx.rotation.z, rtx.rotation.x, rtx.rotation.y );
+			basis->SetRows( rtx.rotation.ez, rtx.rotation.ex, rtx.rotation.ey );
 		}
 
 		else
@@ -131,7 +131,7 @@ void q3ComputeReferenceEdgesAndBasis( const q3Vec3& eR, const q3Transform& rtx, 
 			out[ 3 ] = 7;
 
 			e->Set( eR.z, eR.x, eR.y );
-			basis->SetRows( rtx.rotation.z, -rtx.rotation.x, -rtx.rotation.y );
+			basis->SetRows( rtx.rotation.ez, -rtx.rotation.ex, -rtx.rotation.ey );
 		}
 		break;
 
@@ -144,7 +144,7 @@ void q3ComputeReferenceEdgesAndBasis( const q3Vec3& eR, const q3Transform& rtx, 
 			out[ 3 ] = 0;
 
 			e->Set( eR.y, eR.x, eR.z );
-			basis->SetRows( -rtx.rotation.y, rtx.rotation.x, rtx.rotation.z );
+			basis->SetRows( -rtx.rotation.ey, rtx.rotation.ex, rtx.rotation.ez );
 		}
 
 		else
@@ -155,7 +155,7 @@ void q3ComputeReferenceEdgesAndBasis( const q3Vec3& eR, const q3Transform& rtx, 
 			out[ 3 ] = 9;
 
 			e->Set( eR.y, eR.x, eR.z );
-			basis->SetRows( -rtx.rotation.y, -rtx.rotation.x, -rtx.rotation.z );
+			basis->SetRows( -rtx.rotation.ey, -rtx.rotation.ex, -rtx.rotation.ez );
 		}
 		break;
 	}
@@ -521,32 +521,32 @@ void q3BoxtoBox( q3Manifold* m, q3Box* a, q3Box* b )
 
 	// a's x axis
 	s = q3Abs( t.x ) - (eA.x + q3Dot( absC.Column0( ), eB ));
-	if ( q3TrackFaceAxis( &aAxis, 0, s, &aMax, atx.rotation.x, &nA ) )
+	if ( q3TrackFaceAxis( &aAxis, 0, s, &aMax, atx.rotation.ex, &nA ) )
 		return;
 
 	// a's y axis
 	s = q3Abs( t.y ) - (eA.y + q3Dot( absC.Column1( ), eB ));
-	if ( q3TrackFaceAxis( &aAxis, 1, s, &aMax, atx.rotation.y, &nA ) )
+	if ( q3TrackFaceAxis( &aAxis, 1, s, &aMax, atx.rotation.ey, &nA ) )
 		return;
 
 	// a's z axis
 	s = q3Abs( t.z ) - (eA.z + q3Dot( absC.Column2( ), eB ));
-	if ( q3TrackFaceAxis( &aAxis, 2, s, &aMax, atx.rotation.z, &nA ) )
+	if ( q3TrackFaceAxis( &aAxis, 2, s, &aMax, atx.rotation.ez, &nA ) )
 		return;
 
 	// b's x axis
-	s = q3Abs( q3Dot( t, C.x ) ) - (eB.x + q3Dot( absC.x, eA ));
-	if ( q3TrackFaceAxis( &bAxis, 3, s, &bMax, btx.rotation.x, &nB ) )
+	s = q3Abs( q3Dot( t, C.ex ) ) - (eB.x + q3Dot( absC.ex, eA ));
+	if ( q3TrackFaceAxis( &bAxis, 3, s, &bMax, btx.rotation.ex, &nB ) )
 		return;
 
 	// b's y axis
-	s = q3Abs( q3Dot( t, C.y ) ) - (eB.y + q3Dot( absC.y, eA ));
-	if ( q3TrackFaceAxis( &bAxis, 4, s, &bMax, btx.rotation.y, &nB ) )
+	s = q3Abs( q3Dot( t, C.ey ) ) - (eB.y + q3Dot( absC.ey, eA ));
+	if ( q3TrackFaceAxis( &bAxis, 4, s, &bMax, btx.rotation.ey, &nB ) )
 		return;
 
 	// b's z axis
-	s = q3Abs( q3Dot( t, C.z ) ) - (eB.z + q3Dot( absC.z, eA ));
-	if ( q3TrackFaceAxis( &bAxis, 5, s, &bMax, btx.rotation.z, &nB ) )
+	s = q3Abs( q3Dot( t, C.ez ) ) - (eB.z + q3Dot( absC.ez, eA ));
+	if ( q3TrackFaceAxis( &bAxis, 5, s, &bMax, btx.rotation.ez, &nB ) )
 		return;
 
 	if ( !parallel )

@@ -435,13 +435,13 @@ void q3Body::CalculateMassData( )
 		m_invInertiaModel = q3Inverse( inertia );
 
 		if ( m_flags & eLockAxisX )
-			q3Identity( m_invInertiaModel.x );
+			q3Identity( m_invInertiaModel.ex );
 
 		if ( m_flags & eLockAxisY )
-			q3Identity( m_invInertiaModel.y );
+			q3Identity( m_invInertiaModel.ey );
 
 		if ( m_flags & eLockAxisZ )
-			q3Identity( m_invInertiaModel.z );
+			q3Identity( m_invInertiaModel.ez );
 	}
 	else
 	{

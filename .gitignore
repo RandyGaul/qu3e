@@ -19,3 +19,5 @@
 *.ipch
 *.i
 *.unsuccessfulbuild
+*.cache
+*.idb

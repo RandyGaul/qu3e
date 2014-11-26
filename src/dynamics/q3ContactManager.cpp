@@ -318,9 +318,9 @@ void q3ContactManager::RenderContacts( q3Render* render ) const
 
 			render->SetPenPosition( c->position.x, c->position.y, c->position.z );
 			render->Line(
-				c->position.x + m->normal.x,
-				c->position.y + m->normal.y,
-				c->position.z + m->normal.z
+				c->position.x + m->normal.x * 0.5f,
+				c->position.y + m->normal.y * 0.5f,
+				c->position.z + m->normal.z * 0.5f
 				);
 		}
 

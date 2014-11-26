@@ -2,10 +2,13 @@ add_definitions(-DFREEGLUT_EXPORTS -DFREEGLUT_STATIC -D_CRT_SECURE_NO_WARNINGS)
 
 set(demo_srcs
 	Clock.cpp
+	Demo.cpp
 	main.cpp
 )
 
 set(demo_hdrs
+	Demo.h
+	DropBoxes.h
 	Clock.h
 )
 
@@ -35,6 +38,7 @@ target_link_libraries(
 	demo
 	qu3e
 	freeglut_static
+	imgui
 	${ADDITIONAL_LIBRARIES}
 	${OPENGL_LIBRARIES}
 )

@@ -1,9 +1,9 @@
 //--------------------------------------------------------------------------------------------------
 /**
-@file	main.cpp
+@file	Demo.h
 
 @author	Randy Gaul
-@date	10/10/2014
+@date	11/25/2014
 
 	Copyright (c) 2014 Randy Gaul http://www.randygaul.net
 
@@ -24,52 +24,41 @@
 */
 //--------------------------------------------------------------------------------------------------
 
-#ifdef _WIN32
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-#endif
-#include "../freeglut/freeglut.h"
-#include "Clock.h"
-#include "Demo.h"
-#include "../imgui/imgui.h"
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
-#include "Demo.h"
+#ifndef DEMO_H
+#define DEMO_H
 
-void UpdateScene( f32 time )
+#include "../src/q3.h"
+
+// Base class for running demos to show off q3
+struct Demo
 {
-	// The time accumulator is used to allow the application to render at
-	// a frequency different from the constant frequency the physics sim-
-	// ulation is running at (default 60Hz).
-	static f32 accumulator = 0;
-	accumulator += time;
+	virtual ~Demo( ) {}
 
-	accumulator = q3Clamp01( accumulator );
-	while ( accumulator >= dt )
-	{
-		if ( !paused )
-		{
-			scene.Step( );
-			demos[ currentDemo ]->Update( );
-		}
+	virtual void Init( ) {};
+	virtual void Update( ) {};
+	virtual void Shutdown( ) {};
 
-		else
-		{
-			if ( singleStep )
-			{
-				scene.Step( );
-				demos[ currentDemo ]->Update( );
-				singleStep = false;
-			}
-		}
+	virtual void Render( q3Render *debugDrawer ) { (void)debugDrawer; }
+	virtual void KeyDown( unsigned char key ) { (void)key; }
+	virtual void KeyUp( unsigned char key ) { (void)key; }
+	virtual void LeftClick( i32 x, i32 y ) { (void)x; (void)y; }
+};
 
-		accumulator -= dt;
-	}
-}
+// Is frame by frame stepping enabled?
+extern bool paused;
 
-int main( int argc, char** argv )
-{
-	// Will create OpenGL context, initialize ImGui, and call UpdateScene with
-	// a frequency of dt Hz, and setup the available demos.
-	return InitApp( argc, argv );
-}
+// Can the simulation take a step, while paused is enabled?
+extern bool singleStep;
+
+// Globals for running the scene
+extern float dt;
+extern q3Scene scene;
+int InitApp( int argc, char** argv );
+
+// Globals for maintaining a list of demos
+extern i32 demoCount;
+extern i32 currentDemo;
+#define Q3_DEMO_MAX_COUNT 64
+extern Demo* demos[ Q3_DEMO_MAX_COUNT ];
+
+#endif // DEMO_H

@@ -23,7 +23,7 @@ Since the primary goal of qu3e is simplicity of use the feature list is inention
 * Extremely simple and friendly to use API
 * 3D Oriented Bounding Box (OBB) collision detection and resolution
 * Discrete collision detection
-* 3D Raycasting into the world
+* 3D Raycasting into the world (see RayPush.h in the demo for example usage)
 * Ability to query the world with AABBs and points
 * Callbacks for collision events
 * Sensors (collision volumes)
@@ -37,6 +37,7 @@ Since the primary goal of qu3e is simplicity of use the feature list is inention
 * Axis of rotation locking (x, y or z axes)
 * Modifiable q3Alloc function for custom memory allocation
 * Internal heaps and dynamic arrays for memory management, uses q3Alloc
+* Scene dump -- Can output a log file of C++ code to re-create a physics scene.
 
 Using qu3e
 ----------

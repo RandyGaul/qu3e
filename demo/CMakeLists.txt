@@ -9,6 +9,8 @@ set(demo_srcs
 set(demo_hdrs
 	Demo.h
 	DropBoxes.h
+	RayPush.h
+	BoxStack.h
 	Clock.h
 )
 

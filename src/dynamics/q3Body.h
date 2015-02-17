@@ -97,6 +97,10 @@ public:
 	// Used for debug rendering lines, triangles and basic lighting
 	void Render( q3Render* render ) const;
 
+	// Dump this rigid body and its shapes into a log file. The log can be
+	// used as C++ code to re-create an initial scene setup.
+	void Dump( FILE* file, i32 index ) const;
+
 private:
 	// m_flags
 	enum

@@ -24,6 +24,7 @@
 */
 //--------------------------------------------------------------------------------------------------
 
+#include <cassert>
 #include "q3Quaternion.h"
 #include "q3Mat3.h"
 
@@ -58,6 +59,27 @@ void q3Quaternion::Set( const q3Vec3& axis, r32 radians )
 	y = s * axis.y;
 	z = s * axis.z;
 	w = std::cos( halfAngle );
+}
+
+//--------------------------------------------------------------------------------------------------
+void q3Quaternion::ToAxisAngle( q3Vec3* axis, r32* angle ) const
+{
+	assert( w <= r32( 1.0 ) );
+
+	*angle = r32( 2.0 ) * std::acos( w );
+
+	r32 l = std::sqrt( r32( 1.0 ) - w * w );
+
+	if ( l == r32( 0.0 ) )
+	{
+		axis->Set( r32( 0.0 ), r32( 0.0 ), r32( 0.0 ) );
+	}
+
+	else
+	{
+		l = r32( 1.0 ) / l;
+		axis->Set( x * l, y * l, z * l );
+	}
 }
 
 //--------------------------------------------------------------------------------------------------

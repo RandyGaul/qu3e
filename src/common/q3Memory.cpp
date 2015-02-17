@@ -34,7 +34,7 @@
 // q3Stack
 //--------------------------------------------------------------------------------------------------
 q3Stack::q3Stack( )
-	: m_entries( (q3StackEntry*)malloc( sizeof( q3StackEntry ) * 64 ) )
+	: m_entries( (q3StackEntry*)q3Alloc( sizeof( q3StackEntry ) * 64 ) )
 	, m_index( 0 )
 	, m_allocation( 0 )
 	, m_entryCount( 0 )
@@ -56,9 +56,9 @@ void *q3Stack::Allocate( i32 size )
 	{
 		q3StackEntry* oldEntries = m_entries;
 		m_entryCapacity *= 2;
-		m_entries = (q3StackEntry*)malloc( m_entryCapacity * sizeof( q3StackEntry ) );
+		m_entries = (q3StackEntry*)q3Alloc( m_entryCapacity * sizeof( q3StackEntry ) );
 		memcpy( m_entries, oldEntries, m_entryCount * sizeof( q3StackEntry ) );
-		free( oldEntries );
+		q3Free( oldEntries );
 	}
 
 	q3StackEntry* entry = m_entries + m_entryCount;
@@ -99,12 +99,12 @@ void q3Stack::Free( void *data )
 //--------------------------------------------------------------------------------------------------
 q3Heap::q3Heap( )
 {
-	m_memory = (q3Header*)malloc( q3k_heapSize );
+	m_memory = (q3Header*)q3Alloc( q3k_heapSize );
 	m_memory->next = NULL;
 	m_memory->prev = NULL;
 	m_memory->size = q3k_heapSize;
 
-	m_freeBlocks = (q3FreeBlock*)malloc( sizeof( q3FreeBlock ) * q3k_heapInitialCapacity );
+	m_freeBlocks = (q3FreeBlock*)q3Alloc( sizeof( q3FreeBlock ) * q3k_heapInitialCapacity );
 	m_freeBlockCount = 1;
 	m_freeBlockCapacity = q3k_heapInitialCapacity;
 
@@ -115,8 +115,8 @@ q3Heap::q3Heap( )
 //--------------------------------------------------------------------------------------------------
 q3Heap::~q3Heap( )
 {
-	free( m_memory );
-	free( m_freeBlocks );
+	q3Free( m_memory );
+	q3Free( m_freeBlocks );
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -244,10 +244,10 @@ void q3Heap::Free( void *memory )
 			i32 oldCapacity = m_freeBlockCapacity;
 
 			m_freeBlockCapacity *= 2;
-			m_freeBlocks = (q3FreeBlock*)malloc( sizeof( q3FreeBlock ) * m_freeBlockCapacity );
+			m_freeBlocks = (q3FreeBlock*)q3Alloc( sizeof( q3FreeBlock ) * m_freeBlockCapacity );
 
 			memcpy( m_freeBlocks, oldBlocks, sizeof( q3FreeBlock ) * oldCapacity );
-			free( oldBlocks );
+			q3Free( oldBlocks );
 		}
 
 		m_freeBlocks[ m_freeBlockCount++ ] = block;
@@ -287,7 +287,7 @@ void* q3PagedAllocator::Allocate( )
 
 	else
 	{
-		q3Page* page = (q3Page*)malloc( m_blockSize * m_blocksPerPage + sizeof( q3Page ) );
+		q3Page* page = (q3Page*)q3Alloc( m_blockSize * m_blocksPerPage + sizeof( q3Page ) );
 		++m_pageCount;
 
 		page->next = m_pages;
@@ -342,7 +342,7 @@ void q3PagedAllocator::Clear( )
 	for ( i32 i = 0; i < m_pageCount; ++i )
 	{
 		q3Page* next = page->next;
-		free( page );
+		q3Free( page );
 		page = next;
 	}
 

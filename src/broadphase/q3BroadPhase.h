@@ -29,6 +29,7 @@
 
 #include "../common/q3Types.h"
 #include "q3DynamicAABBTree.h"
+#include "../common/q3Memory.h"
 
 //--------------------------------------------------------------------------------------------------
 // q3BroadPhase
@@ -92,9 +93,9 @@ inline bool q3BroadPhase::TreeCallBack( i32 index )
 	{
 		q3ContactPair* oldBuffer = m_pairBuffer;
 		m_pairCapacity *= 2;
-		m_pairBuffer = (q3ContactPair*)malloc( m_pairCapacity * sizeof( q3ContactPair ) );
+		m_pairBuffer = (q3ContactPair*)q3Alloc( m_pairCapacity * sizeof( q3ContactPair ) );
 		memcpy( m_pairBuffer, oldBuffer, m_pairCount * sizeof( q3ContactPair ) );
-		free( oldBuffer );
+		q3Free( oldBuffer );
 	}
 
 	i32 iA = q3Min( index, m_currentIndex );

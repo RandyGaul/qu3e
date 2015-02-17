@@ -39,10 +39,7 @@
 //--------------------------------------------------------------------------------------------------
 q3Scene::q3Scene( r32 dt, const q3Vec3& gravity, i32 iterations )
 	: m_contactManager( &m_stack )
-	, m_islands( (q3Island*)malloc( sizeof( q3Island ) * 64 ) )
 	, m_boxAllocator( sizeof( q3Box ), 256 )
-	, m_islandCount( 0 )
-	, m_islandCapacity( 64 )
 	, m_bodyCount( 0 )
 	, m_bodyList( NULL )
 	, m_gravity( gravity )
@@ -192,7 +189,6 @@ void q3Scene::Step( )
 	m_stack.Free( island.m_contacts );
 	m_stack.Free( island.m_velocities );
 	m_stack.Free( island.m_bodies );
-	m_islandCount = 0;
 
 	// Update the broadphase AABBs
 	for ( q3Body* body = m_bodyList; body; body = body->m_next )
@@ -339,4 +335,119 @@ void q3Scene::Shutdown( )
 void q3Scene::SetContactListener( q3ContactListener* listener )
 {
 	m_contactManager.m_contactListener = listener;
+}
+
+//--------------------------------------------------------------------------------------------------
+void q3Scene::QueryAABB( q3QueryCallback *cb, const q3AABB& aabb ) const
+{
+	struct SceneQueryWrapper
+	{
+		bool TreeCallBack( i32 id )
+		{
+			q3AABB aabb;
+			q3Box *box = (q3Box *)broadPhase->m_tree.GetUserData( id );
+
+			box->ComputeAABB( box->body->GetTransform( ), &aabb );
+
+			if ( q3AABBtoAABB( m_aabb, aabb ) )
+			{
+				return cb->ReportShape( box );
+			}
+
+			return true;
+		}
+
+		q3QueryCallback *cb;
+		const q3BroadPhase *broadPhase;
+		q3AABB m_aabb;
+	};
+
+	SceneQueryWrapper wrapper;
+	wrapper.m_aabb = aabb;
+	wrapper.broadPhase = &m_contactManager.m_broadphase;
+	wrapper.cb = cb;
+	m_contactManager.m_broadphase.m_tree.Query( &wrapper, aabb );
+}
+
+//--------------------------------------------------------------------------------------------------
+void q3Scene::QueryPoint( q3QueryCallback *cb, const q3Vec3& point ) const
+{
+	struct SceneQueryWrapper
+	{
+		bool TreeCallBack( i32 id )
+		{
+			q3Box *box = (q3Box *)broadPhase->m_tree.GetUserData( id );
+
+			if ( box->TestPoint( box->body->GetTransform( ), m_point ) )
+			{
+				cb->ReportShape( box );
+			}
+
+			return true;
+		}
+
+		q3QueryCallback *cb;
+		const q3BroadPhase *broadPhase;
+		q3Vec3 m_point;
+	};
+
+	SceneQueryWrapper wrapper;
+	wrapper.m_point = point;
+	wrapper.broadPhase = &m_contactManager.m_broadphase;
+	wrapper.cb = cb;
+	const r32 k_fattener = r32( 0.5 );
+	q3Vec3 v( k_fattener, k_fattener, k_fattener );
+	q3AABB aabb;
+	aabb.min = point - v;
+	aabb.max = point + v;
+	m_contactManager.m_broadphase.m_tree.Query( &wrapper, aabb );
+}
+
+//--------------------------------------------------------------------------------------------------
+void q3Scene::RayCast( q3QueryCallback *cb, q3RaycastData& rayCast ) const
+{
+	struct SceneQueryWrapper
+	{
+		bool TreeCallBack( i32 id )
+		{
+			q3Box *box = (q3Box *)broadPhase->m_tree.GetUserData( id );
+
+			if ( box->Raycast( box->body->GetTransform( ), m_rayCast ) )
+			{
+				return cb->ReportShape( box );
+			}
+
+			return true;
+		}
+
+		q3QueryCallback *cb;
+		const q3BroadPhase *broadPhase;
+		q3RaycastData *m_rayCast;
+	};
+	
+	SceneQueryWrapper wrapper;
+	wrapper.m_rayCast = &rayCast;
+	wrapper.broadPhase = &m_contactManager.m_broadphase;
+	wrapper.cb = cb;
+	m_contactManager.m_broadphase.m_tree.Query( &wrapper, rayCast );
+}
+
+//--------------------------------------------------------------------------------------------------
+void q3Scene::Dump( FILE* file ) const
+{
+	fprintf( file, "// Ensure 64/32-bit memory compatability with the dump contents\n" );
+	fprintf( file, "assert( sizeof( int* ) == %d );\n", sizeof( int* ) );
+	fprintf( file, "scene.SetGravity( q3Vec3( %.15lf, %.15lf, %.15lf ) );\n", m_gravity.x, m_gravity.y, m_gravity.z );
+	fprintf( file, "scene.SetAllowSleep( %s );\n", m_allowSleep ? "true" : "false" );
+	fprintf( file, "scene.SetEnableFriction( %s );\n", m_enableFriction ? "true" : "false" );
+
+	fprintf( file, "q3Body** bodies = (q3Body**)q3Alloc( sizeof( q3Body* ) * %d );\n", m_bodyCount );
+
+	i32 i = 0;
+	for ( q3Body* body = m_bodyList; body; body = body->m_next, ++i )
+	{
+		body->Dump( file, i );
+	}
+
+	fprintf( file, "q3Free( bodies );\n" );
 }

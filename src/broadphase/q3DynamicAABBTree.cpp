@@ -26,6 +26,7 @@
 
 #include "q3DynamicAABBTree.h"
 #include "../debug/q3Render.h"
+#include "../common/q3Memory.h"
 
 //--------------------------------------------------------------------------------------------------
 // q3DynamicAABBTree
@@ -46,7 +47,7 @@ q3DynamicAABBTree::q3DynamicAABBTree( )
 
 	m_capacity = 1024;
 	m_count = 0;
-	m_nodes = (Node *)malloc( sizeof( Node ) * m_capacity );
+	m_nodes = (Node *)q3Alloc( sizeof( Node ) * m_capacity );
 
 	AddToFreeList( 0 );
 }
@@ -54,7 +55,7 @@ q3DynamicAABBTree::q3DynamicAABBTree( )
 //--------------------------------------------------------------------------------------------------
 q3DynamicAABBTree::~q3DynamicAABBTree( )
 {
-	free( m_nodes );
+	q3Free( m_nodes );
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -217,9 +218,9 @@ i32 q3DynamicAABBTree::AllocateNode( )
 	if ( m_freeList == Node::Null )
 	{
 		m_capacity *= 2;
-		Node *newNodes = (Node *)malloc( sizeof( Node ) * m_capacity );
+		Node *newNodes = (Node *)q3Alloc( sizeof( Node ) * m_capacity );
 		memcpy( newNodes, m_nodes, sizeof( Node ) * m_count );
-		free( m_nodes );
+		q3Free( m_nodes );
 		m_nodes = newNodes;
 
 		AddToFreeList( m_count );

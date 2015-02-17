@@ -23,8 +23,8 @@ Since the primary goal of qu3e is simplicity of use the feature list is inention
 * Extremely simple and friendly to use API
 * 3D Oriented Bounding Box (OBB) collision detection and resolution
 * Discrete collision detection
-* 3D Raycasting into the world *
-* Ability to query the world with AABBs and points *
+* 3D Raycasting into the world
+* Ability to query the world with AABBs and points
 * Callbacks for collision events
 * Sensors (collision volumes)
 * Ability to create an aggregate rigid body composed of any number of boxes
@@ -35,7 +35,8 @@ Since the primary goal of qu3e is simplicity of use the feature list is inention
 * Highly accurate collision manifold generation via the Separating Axis Theorem
 * Collision layers
 * Axis of rotation locking (x, y or z axes)
-* *These are not quite done yet
+* Modifiable q3Alloc function for custom memory allocation
+* Internal heaps and dynamic arrays for memory management, uses q3Alloc
 
 Using qu3e
 ----------

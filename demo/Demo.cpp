@@ -35,6 +35,8 @@
 #include "stb_image.h"
 
 #include "DropBoxes.h"
+#include "RayPush.h"
+#include "BoxStack.h"
 
 float dt = 1.0f / 60.0f;
 q3Scene scene( dt );
@@ -53,6 +55,7 @@ int windowWidth;
 int windowHeight;
 i32 demoCount;
 i32 currentDemo;
+char sceneFileName[ 256 ];
 i32 lastDemo;
 Demo* demos[ Q3_DEMO_MAX_COUNT ];
 
@@ -370,22 +373,29 @@ void MainLoop( void )
 	}
 
 	i32 w = glutGet( GLUT_WINDOW_WIDTH );
+	Reshape( w, glutGet( GLUT_WINDOW_HEIGHT ) );
 
 	f32 time = g_clock.Start( );
 
 	UpdateImGui( 1.0f / 60.0f );
 
-	ImGui::SetNewWindowDefaultPos( ImVec2( float( w - 175 - 30 ), 30 ) );
-	ImGui::Begin( "q3Scene Settings", NULL, ImVec2( 175, 200 ) );
-	ImGui::PushItemWidth( 100.0f );
-	ImGui::Combo( "Demo", &currentDemo, "Drop Boxes\0\0" );
+	ImGui::SetNewWindowDefaultPos( ImVec2( float( w - 300 - 30 ), 30 ) );
+	ImGui::Begin( "q3Scene Settings", NULL, ImVec2( 300, 225 ) );
+	ImGui::Combo( "Demo", &currentDemo, "Drop Boxes\0Ray Push\0Box Stack\0" );
 	ImGui::Checkbox( "Pause", &paused );
 	if ( paused )
 		ImGui::Checkbox( "Single Step", &singleStep );
 	ImGui::Checkbox( "Sleeping", &enableSleep );
 	ImGui::Checkbox( "Friction", &enableFriction );
 	ImGui::SliderInt( "Iterations", &velocityIterations, 1, 50 );
-	ImGui::PopItemWidth( );
+	int flags = (1 << 0) | (1 << 1) | (1 << 2);
+	ImGui::InputText( "Dump File Name", sceneFileName, ((int)(sizeof(sceneFileName)/sizeof(*sceneFileName))), flags );
+	if ( ImGui::Button( "Dump Scene" ) )
+	{
+		FILE* fp = fopen( sceneFileName, "w" );
+		scene.Dump( fp );
+		fclose( fp );
+	}
 	ImGui::End( );
 
 	scene.SetAllowSleep( enableSleep );
@@ -399,6 +409,8 @@ void MainLoop( void )
 	g_clock.Stop( );
 
 	scene.Render( &renderer );
+
+	demos[ currentDemo ]->Render( &renderer );
 
 	ImGui::Render( );
 
@@ -517,8 +529,11 @@ int InitApp( int argc, char** argv )
 	glColorMaterial( GL_FRONT, GL_AMBIENT_AND_DIFFUSE );
 
 	demos[ 0 ] = new DropBoxes( );
-	demoCount = 1;
+	demos[ 1 ] = new RayPush( );
+	demos[ 2 ] = new BoxStack( );
+	demoCount = 3;
 	demos[ currentDemo ]->Init( );
+	sprintf( sceneFileName, "q3dump.txt" );
 
 	InitImGui( );
 	glutMainLoop( );

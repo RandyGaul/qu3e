@@ -57,6 +57,7 @@ public:
 	q3Quaternion( const q3Vec3& axis, r32 radians );
 
 	void Set( const q3Vec3& axis, r32 radians );
+	void ToAxisAngle( q3Vec3* axis, r32* angle ) const;
 	void Integrate( const q3Vec3& dv, r32 dt );
 
 	const q3Quaternion operator*( const q3Quaternion& rhs ) const;

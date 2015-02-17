@@ -393,6 +393,75 @@ void q3Body::Render( q3Render* render ) const
 }
 
 //--------------------------------------------------------------------------------------------------
+void q3Body::Dump( FILE* file, i32 index ) const
+{
+	fprintf( file, "{\n" );
+	fprintf( file, "\tq3BodyDef bd;\n" );
+
+	switch ( m_flags & (eStatic | eDynamic | eKinematic) )
+	{
+	case eStatic:
+		fprintf( file, "\tbd.bodyType = q3BodyType( %d );\n", eStaticBody );
+		break;
+
+	case eDynamic:
+		fprintf( file, "\tbd.bodyType = q3BodyType( %d );\n", eDynamicBody );
+		break;
+
+	case eKinematic:
+		fprintf( file, "\tbd.bodyType = q3BodyType( %d );\n", eKinematicBody );
+		break;
+	}
+
+	fprintf( file, "\tbd.position.Set( r32( %.15lf ), r32( %.15lf ), r32( %.15lf ) );\n", m_tx.position.x, m_tx.position.y, m_tx.position.z );
+	q3Vec3 axis;
+	r32 angle;
+	m_q.ToAxisAngle( &axis, &angle );
+	fprintf( file, "\tbd.axis.Set( r32( %.15lf ), r32( %.15lf ), r32( %.15lf ) );\n", axis.x, axis.y, axis.z );
+	fprintf( file, "\tbd.angle = r32( %.15lf );\n", angle );
+	fprintf( file, "\tbd.linearVelocity.Set( r32( %.15lf ), r32( %.15lf ), r32( %.15lf ) );\n", m_linearVelocity.x, m_linearVelocity.y, m_linearVelocity.z );
+	fprintf( file, "\tbd.angularVelocity.Set( r32( %.15lf ), r32( %.15lf ), r32( %.15lf ) );\n", m_angularVelocity.x, m_angularVelocity.y, m_angularVelocity.z );
+	fprintf( file, "\tbd.gravityScale = r32( %.15lf );\n", m_gravityScale );
+	fprintf( file, "\tbd.layers = %d;\n", m_layers );
+	fprintf( file, "\tbd.allowSleep = bool( %d );\n", m_flags & eAllowSleep );
+	fprintf( file, "\tbd.awake = bool( %d );\n", m_flags & eAwake );
+	fprintf( file, "\tbd.awake = bool( %d );\n", m_flags & eAwake );
+	fprintf( file, "\tbd.lockAxisX = bool( %d );\n", m_flags & eLockAxisX );
+	fprintf( file, "\tbd.lockAxisY = bool( %d );\n", m_flags & eLockAxisY );
+	fprintf( file, "\tbd.lockAxisZ = bool( %d );\n", m_flags & eLockAxisZ );
+	fprintf( file, "\tbodies[ %d ] = scene.CreateBody( bd );\n\n", index );
+
+	q3Box* box = m_boxes;
+
+	while ( box )
+	{
+		fprintf( file, "\t{\n" );
+		fprintf( file, "\t\tq3BoxDef sd;\n" );
+		fprintf( file, "\t\tsd.SetFriction( r32( %.15lf ) );\n", box->friction );
+		fprintf( file, "\t\tsd.SetRestitution( r32( %.15lf ) );\n", box->restitution );
+		fprintf( file, "\t\tsd.SetDensity( r32( %.15lf ) );\n", box->density );
+		i32 sensor = (int)box->sensor;
+		fprintf( file, "\t\tsd.SetSensor( bool( %d ) );\n", sensor );
+		fprintf( file, "\t\tq3Transform boxTx;\n" );
+		q3Transform boxTx = box->local;
+		q3Vec3 xAxis = boxTx.rotation.ex;
+		q3Vec3 yAxis = boxTx.rotation.ey;
+		q3Vec3 zAxis = boxTx.rotation.ez;
+		fprintf( file, "\t\tq3Vec3 xAxis( r32( %.15lf ), r32( %.15lf ), r32( %.15lf ) );\n", xAxis.x, xAxis.y, xAxis.z );
+		fprintf( file, "\t\tq3Vec3 yAxis( r32( %.15lf ), r32( %.15lf ), r32( %.15lf ) );\n", yAxis.x, yAxis.y, yAxis.z );
+		fprintf( file, "\t\tq3Vec3 zAxis( r32( %.15lf ), r32( %.15lf ), r32( %.15lf ) );\n", zAxis.x, zAxis.y, zAxis.z );
+		fprintf( file, "\t\tboxTx.rotation.SetRows( xAxis, yAxis, zAxis );\n" );
+		fprintf( file, "\t\tboxTx.position.Set( r32( %.15lf ), r32( %.15lf ), r32( %.15lf ) );\n", boxTx.position.x, boxTx.position.y, boxTx.position.z );
+		fprintf( file, "\t\tsd.Set( boxTx, q3Vec3( r32( %.15lf ), r32( %.15lf ), r32( %.15lf ) ) );\n", box->e.x * 2.0f, box->e.y * 2.0f, box->e.z * 2.0f );
+		fprintf( file, "\t\tbodies[ %d ]->AddBox( sd );\n", index );
+		fprintf( file, "\t}\n" );
+		box = box->next;
+	}
+
+	fprintf( file, "}\n\n" );
+}
+
+//--------------------------------------------------------------------------------------------------
 void q3Body::CalculateMassData( )
 {
 	q3Mat3 inertia = q3Diagonal( r32( 0.0 ) );

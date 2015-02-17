@@ -40,6 +40,10 @@ struct q3ContactConstraint;
 class q3Render;
 struct q3Island;
 
+// This listener is used to gather information about two shapes colliding. This
+// can be used for game logic and sounds. Physics objects created in these
+// callbacks will not be reported until the following frame. These callbacks
+// can be called frequently, so make them efficient.
 class q3ContactListener
 {
 public:
@@ -49,6 +53,21 @@ public:
 
 	virtual void BeginContact( const q3ContactConstraint *contact ) = 0;
 	virtual void EndContact( const q3ContactConstraint *contact ) = 0;
+};
+
+// This class represents general queries for points, AABBs and Raycasting.
+// ReportShape is called the moment a valid shape is found. The return
+// value of ReportShape controls whether to continue or stop the query.
+// By returning only true, all shapes that fulfill the query will be re-
+// ported.
+class q3QueryCallback
+{
+public:
+	virtual ~q3QueryCallback( )
+	{
+	}
+
+	virtual bool ReportShape( q3Box *box ) = 0;
 };
 
 class q3Scene
@@ -107,13 +126,29 @@ public:
 	// listener.
 	void SetContactListener( q3ContactListener* listener );
 
+	// Query the world to find any shapes that can potentially intersect
+	// the provided AABB. This works by querying the broadphase with an
+	// AAABB -- only *potential* intersections are reported. Perhaps the
+	// user might use lmDistance as fine-grained collision detection.
+	void QueryAABB( q3QueryCallback *cb, const q3AABB& aabb ) const;
+
+	// Query the world to find any shapes intersecting a world space point.
+	void QueryPoint( q3QueryCallback *cb, const q3Vec3& point ) const;
+
+	// Query the world to find any shapes intersecting a ray.
+	void RayCast( q3QueryCallback *cb, q3RaycastData& rayCast ) const;
+
+	// Dump all rigid bodies and shapes into a log file. The log can be
+	// used as C++ code to re-create an initial scene setup. Contacts
+	// are *not* logged, meaning any cached resolution solutions will
+	// not be saved to the log file. This means the log file will be most
+	// accurate when dumped upon scene initialization, instead of mid-
+	// simulation.
+	void Dump( FILE* file ) const;
+
 private:
 	q3ContactManager m_contactManager;
 	q3PagedAllocator m_boxAllocator;
-
-	q3Island* m_islands;
-	i32 m_islandCount;
-	i32 m_islandCapacity;
 
 	i32 m_bodyCount;
 	q3Body* m_bodyList;

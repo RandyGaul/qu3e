@@ -37,7 +37,7 @@ Since the primary goal of qu3e is simplicity of use the feature list is inention
 * Axis of rotation locking (x, y or z axes)
 * Modifiable q3Alloc function for custom memory allocation
 * Internal heaps and dynamic arrays for memory management, uses q3Alloc
-* Scene dump -- Can output a log file of C++ code to re-create a physics scene.
+* Scene dump -- Can output a log file of C++ code to re-create a physics scene
 
 Using qu3e
 ----------
@@ -68,16 +68,23 @@ The **q3BodyDef** can be passed to a scene in return for a new rigid body. The b
 	
 To simulate the scene simply call **scene.Step( )**. This will simulate the world forward in time by the timestep specified at the scene's construction (usually 1/60 or 1/30).
 
+Reporting Bugs
+--------------
+<b>I've found a bug. How should I report it, or can I fix it myself?</b>
+
+If you feel up for fixing bugs please do add a pull request and I'll do my best to look over and merge the request. Otherwise the github "issues" facility is great for reporting and discussing bugs.
+
+<b>Use the q3Scene::Dump( FILE* ) feature, if possible.</b>
+
+qu3e has a cool feature that Box2D employs: the scene can dump C++ code into a text file. This code can be directly copy/pasted into one of my own demo files. If anyone has a specific bug and is able to dump the scene just before the bug occurs, a scene file can be shared -- this allows a very easy way for myself (or others) to pinpoint and remove bugs. The scene dumping tool is also just a good way to share scene initialization in general. Note: Since the dump outputs C++ code the dump itself is not a form of proper serialization as a recompile would be necessary to run the dump's contents.
+
+
 FAQ
 ---
 
 <b>Can you add in this feature?</b>
 
 One of the main goals is to keep the feature list low in order to control code bloat, complexity, and the API itself. If a more full-featured open source physics library is desired please see the Bullet physics engine. That said I'm always open to new ideas. Please use the github "issues" facility to suggest or discuss improvements -- I'll happily respond as time permits.
-
-<b>I've found a bug. How should I report it, or can I fix it myself?</b>
-
-If you feel up for fixing bugs please do add a pull request and I'll do my best to look over and merge the request. Otherwise the github "issues" facility is great for reporting and discussing bugs.
 
 <b>What are the pros and cons of using your library over something like Bullet, Havok or ODE?</b>
 

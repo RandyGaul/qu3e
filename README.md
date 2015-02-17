@@ -96,16 +96,36 @@ Making use of various C++ features or external C++ libraries adds to the depende
 
 <b>What collision shapes are supported?</b>
 
-Currently just boxes (width, height, depth). Spheres and capsules may be added in the future depending on if users request them. Currently any number of boxes can be used to construct an aggregate rigid body -- this assuages most collision desires that many users have.
+Currently just boxes (width, height, depth). Spheres and capsules may be added in the future depending on if users request them. Currently any number of boxes can be used to construct an aggregate rigid body -- this assuages most collision desires that many users have. Perhaps convex hulls and meshes will be added in the far future.
 
 Future
 ------
 
 As time goes on the feature list of qu3e will intentionally not grow much larger. Since the primary goal of the library is to very simple in terms of implementation, and simple to use, bloat should be avoided.
 
-Multi-threading is an interesting topic and qu3e was written with threading in mind. A job system, or task system, would be ideal to batch together things like collision detection. Perhaps a threadpool will be added to qu3e by myself or some future contributor.
+<b>Baumgarte and Post Stabilization (Full Non-linear Gauss Seidel)</b>
+
+Currently qu3e uses the Baumgarte Stabilization method for ensuring that "constraint drift" does not occur. The Baumgarte method is very efficient and simple to implement, thus qu3e uses it. However the Baumgarte method does not look all too pleasant in many cases, and also adds extra energy into the system. This is why qu3e has trouble simulating zero restitution.
+
+A much better stabilization method would be [Post Stabilization](https://www.cs.rutgers.edu/~dpai/papers/ClinePai03.pdf). The idea here is to use the velocity jacobian from the velocity constraint to form an iterative position level solver. A good discussion of various stabilization techniques (including the preferred method talked about in this paragraph) can be found in Box2D's b2Island.cpp file in the comments near the top. To implement proper Post Stabilization would require a fair amount of refactoring of the collision detection in qu3e. Right now qu3e constructs collision manifolds in world space. If these were changed to store information relative to the shapes associated with a manifold, then it would be much easier to implement post stabilization. Some other changes would be necessary to ensure many cache misses are avoided.
+
+I would like to upgrade the stabilization method in qu3e at some point in the future, but currently don't know when the time will come since it would require a good amount of time.
+
+<b>Multi-Threading Support</b>
+
+Multi-threading is an interesting topic and qu3e was written with threading in mind. A job system, or task system, would be ideal to batch together things like collision detection. Perhaps a threadpool will be added to qu3e by myself or some future contributor. A minor tweak to the q3Body island index would be needed. Some small memory alignment changes would also be needed. q3Stack can be used to allocate memory for jobs, since stack allocation is so fast.
+
+<b>Single Instruction Multiple Data (SIMD) Support</b>
 
 SIMD - I actually don't have experience using SIMD and all math in qu3e is scalar. This shouldn't really be a performance problem for anyone, but obviously it can be improved. However one clever bit of code is within Collide.cpp: the clipping of two 3D polygons is done via single dimensional lerps! This is a nice way of using scalar math to avoid the need for any SIMD in this particular case.
+
+I do imagine that it would be pretty easy to swap in some open source math library for any bottlenecks, or by-hand code particular pieces.
+
+<b>Additional Collision Shapes (spheres, capsules, convex hulls, meshes)</b>
+
+Collision detection takes time to write, and while in school I don't have infinite time to dedicate to writing robust collision detection code. Spheres and capsules will likely be added by myself in the near future. Convex hulls and meshes are features in other physics engines, so it might not make sense for qu3e to compete -- especially since other open-source engines may just absorb code written for qu3e into their own codebases.
+
+<b>Advanced Joints and Springs</b>
 
 Advanced joints (springs, rods, revolute/prismatic joints) are a nice feature of other physics libraries, and qu3e might incorporate some. They aren't on any to-do list and wouldn't be added without user requests. Some joint types wouldn't clutter the library and can be fairly easy to use for those well versed with C++. The big problem with more advanced joints is setting them up. Often an editor or visual tool is the best way to setup joints, though qu3e itself would require raw C++ to be used.
 

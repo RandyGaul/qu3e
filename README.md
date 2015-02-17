@@ -35,8 +35,8 @@ Since the primary goal of qu3e is simplicity of use the feature list is inention
 * Highly accurate collision manifold generation via the Separating Axis Theorem
 * Collision layers
 * Axis of rotation locking (x, y or z axes)
-* Modifiable q3Alloc function for custom memory allocation
-* Internal heaps and dynamic arrays for memory management, uses q3Alloc
+* Modifiable q3Alloc and q3Free functions for custom memory allocation
+* Internal heaps and dynamic arrays for memory management, uses q3Alloc/q3Free
 * Scene dump -- Can output a log file of C++ code to re-create a physics scene
 
 Using qu3e

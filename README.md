@@ -101,7 +101,7 @@ Currently just boxes (width, height, depth). Spheres and capsules may be added i
 Future
 ------
 
-As time goes on the feature list of qu3e will intentionally not grow much larger. Since the primary goal of the library is to very simple in terms of implementation, and simple to use, bloat should be avoided. However, if anyone wants to contribute to any of these areas I would be more than happy work with contributors to include their contributions to qu3e. I handle contributions on a case-by-case basis, and full credit to the contributor would be granted in the source code comments, and in this readme.
+As time goes on the feature list of qu3e will intentionally not grow much larger (at least for the near future). Since the primary goal of the library is to very simple in terms of implementation, and simple to use, bloat should be avoided. However, if anyone wants to contribute to any of these areas I would be more than happy work with contributors to include their contributions to qu3e. I handle contributions on a case-by-case basis, and full credit to the contributor would be granted in the source code comments, and in this readme.
 
 <b>Baumgarte and Post Stabilization (Full Non-linear Gauss Seidel)</b>
 

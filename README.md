@@ -118,9 +118,10 @@ A collision manifold consists of contact points. Only 4 well chosen contact poin
 Reducing a manifold down to a constant maximum of 4 contact points will increase stability in the iterative contact solver. This reduction will also lower the memory cost of keeping manifolds in memory, thus increasing cache line efficiency as a side-effect.
 
 Manifold reduction is not currently implemented in qu3e. Here is an algorithm overview, in case someone wants to try to implement it:
-* Find two points furthest apart
-* Find third point farthest from initial line
-* Find fourth point that maximizes area in the 2D contact plane
+* Query 2D contact plane with a constant direction for a support point, add this first point
+* Find the point farthest from the first point, this forms a line segment
+* Find third point farthest from previous segment to form a triangle
+* Find fourth point that maximizes area of the new quad in the 2D contact plane
 
 For continuous collision detection the deepest point in the manifold needs be kept in the manifold. This can complicate the manifold reduction algorithm, and this complication is not discussed here.
 

@@ -101,7 +101,7 @@ Currently just boxes (width, height, depth). Spheres and capsules may be added i
 Future
 ------
 
-As time goes on the feature list of qu3e will intentionally not grow much larger. Since the primary goal of the library is to very simple in terms of implementation, and simple to use, bloat should be avoided.
+As time goes on the feature list of qu3e will intentionally not grow much larger. Since the primary goal of the library is to very simple in terms of implementation, and simple to use, bloat should be avoided. However, if anyone wants to contribute to any of these areas I would be more than happy work with contributors to include their contributions to qu3e. I handle contributions on a case-by-case basis, and full credit to the contributor would be granted in the source code comments, and in this readme.
 
 <b>Baumgarte and Post Stabilization (Full Non-linear Gauss Seidel)</b>
 
@@ -110,6 +110,27 @@ Currently qu3e uses the Baumgarte Stabilization method for ensuring that "constr
 A much better stabilization method would be [Post Stabilization](https://www.cs.rutgers.edu/~dpai/papers/ClinePai03.pdf). The idea here is to use the velocity jacobian from the velocity constraint to form an iterative position level solver. A good discussion of various stabilization techniques (including the preferred method talked about in this paragraph) can be found in Box2D's b2Island.cpp file in the comments near the top. To implement proper Post Stabilization would require a fair amount of refactoring of the collision detection in qu3e. Right now qu3e constructs collision manifolds in world space. If these were changed to store information relative to the shapes associated with a manifold, then it would be much easier to implement post stabilization. Some other changes would be necessary to ensure many cache misses are avoided.
 
 I would like to upgrade the stabilization method in qu3e at some point in the future, but currently don't know when the time will come since it would require a good amount of time.
+
+<b>Manifold Reduction</b>
+
+A collision manifold consists of contact points. Only 4 well chosen contact points are necessary (for discrete collision detection) to create a stable manifold. Many manifolds between two shapes can have much more than four contact points. Currently, if two boxes rest upon one another a total of 8 contact points may be created.
+
+Reducing a manifold down to a constant maximum of 4 contact points will increase stability in the iterative contact solver. This reduction will also lower the memory cost of keeping manifolds in memory, thus increasing cache line efficiency as a side-effect.
+
+Manifold reduction is not currently implemented in qu3e. Here is an algorithm overview, in case someone wants to try to implement it:
+* Find two points furthest apart
+* Find third point farthest from initial line
+* Find fourth point that maximizes area in the 2D contact plane
+
+For continuous collision detection the deepest point in the manifold needs be kept in the manifold. This can complicate the manifold reduction algorithm, and this complication is not discussed here.
+
+<b>Continuous Collision Detection</b>
+
+Continuous collision detection is not currently implemented in qu3e, but it's cool to have and great for general gameplay. Erin Catto has many free resources for implementing his Bilateral Advancement Time of Impact (TOI) solver. Erin's TOI solver can be used to find a TOI between two convex shapes. From here the Post Stabilization method (described above) can be used in conjuction with a computed TOI to prevent all tunnelining between Static/Dynamic and Static/Kinematic body pairs.
+
+Dynamic to Dynamic or Kinematic to Dynamic continuous collision detection would involve running an O( N^2 ) algorithm with an unkown (and potentially huge) factor of N. For this reason these collision pairs are not discussed here.
+
+At some point in the future I would love to use Erin's resources to implement some cool open source tools for continuous collision detection. Perhaps after I graduate from school this might be a good idea.
 
 <b>Multi-Threading Support</b>
 

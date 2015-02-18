@@ -1,5 +1,5 @@
-qu3e
-====
+qu3e v1.01
+==========
 
 qu3e is a compact, light-weight and fast 3D physics engine in C++. It is has been specifically created to be used in games. It is portable with no external dependencies other than various standard c header files (such as **cassert** and **cmath**). qu3e is designed to have an extremely simple interface for creating and manipulating rigid bodies.
 
@@ -161,3 +161,15 @@ License
 -------
 
 qu3e is licensed under the [zlib license](http://en.wikipedia.org/wiki/Zlib_License). See LICENSE.txt for more information.
+
+Change Log
+----------
+
+* v1.00 : Initial version
+* v1.01 :
+    - Raycasting
+    - AABB query
+	- Point query
+	- q3Scene::Dump( FILE* ); Dump contents of scene as C++ file
+	- Minor internal bug fixes, mostly with transforms for body->local space
+	- Updated readme with large discussion of potential future features

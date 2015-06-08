@@ -24,7 +24,7 @@
 */
 //--------------------------------------------------------------------------------------------------
 
-#include <malloc.h>
+#include <stdlib.h>
 
 #include "q3Scene.h"
 #include "../dynamics/q3Body.h"

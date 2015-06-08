@@ -27,7 +27,7 @@
 #ifndef Q3MEMORY_H
 #define Q3MEMORY_H
 
-#include <malloc.h>
+#include <stdlib.h>
 
 #include "q3Types.h"
 

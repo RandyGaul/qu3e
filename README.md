@@ -128,7 +128,7 @@ For continuous collision detection the deepest point in the manifold needs be ke
 
 <b>Continuous Collision Detection</b>
 
-Continuous collision detection is not currently implemented in qu3e, but it's cool to have and great for general gameplay. Erin Catto has many free resources for implementing his Bilateral Advancement Time of Impact (TOI) solver. Erin's TOI solver can be used to find a TOI between two convex shapes. From here the Post Stabilization method (described above) can be used in conjuction with a computed TOI to prevent all tunnelining between Static/Dynamic and Static/Kinematic body pairs.
+Continuous collision detection is not currently implemented in qu3e, but it's cool to have and great for general gameplay. Erin Catto has many free resources for implementing his Bilateral Advancement Time of Impact (TOI) solver. Erin's TOI solver can be used to find a TOI between two convex shapes. From here the Post Stabilization method (described above) can be used in conjunction with a computed TOI to prevent all tunnelining between Static/Dynamic and Static/Kinematic body pairs.
 
 Dynamic to Dynamic or Kinematic to Dynamic continuous collision detection would involve running an O( N^2 ) algorithm with an unkown (and potentially huge) factor of N. For this reason these collision pairs are not discussed here.
 

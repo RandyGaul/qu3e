@@ -98,6 +98,7 @@ public:
 	{
 		glEnable( GL_LIGHTING );
 		glBegin( GL_TRIANGLES );
+		glNormal3f( (float)nx_, (float)ny_, (float)nz_ );
 		glColor4f( 0.2f, 0.4f, 0.7f, 0.5f );
 		glVertex3f( (float)x1, (float)y1, (float)z1 );
 		glVertex3f( (float)x2, (float)y2, (float)z2 );
@@ -108,7 +109,9 @@ public:
 
 	void SetTriNormal( f32 x, f32 y, f32 z ) override
 	{
-		glNormal3f( (float)x, (float)y, (float)z );
+		nx_ = x;
+		ny_ = y;
+		nz_ = z;
 	}
 
 	void Point( ) override
@@ -121,6 +124,7 @@ public:
 private:
 	f32 x_, y_, z_;
 	f32 sx_, sy_, sz_;
+	f32 nx_, ny_, nz_;
 };
 
 Renderer renderer;

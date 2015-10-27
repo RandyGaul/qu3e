@@ -16,6 +16,7 @@ Screenshots
 ![screenshot 2](/screenshots/screen1.PNG?raw=true)
 ![screenshot 2](/screenshots/anim0.gif?raw=true)
 ![screenshot 3](/screenshots/rays.gif?raw=true)
+![screenshot 4](/screenshots/aggregate.gif?raw=true)
 
 Feature List
 ------------

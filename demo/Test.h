@@ -38,11 +38,11 @@ struct Test : public Demo
 		boxDef.Set( tx, q3Vec3( 50.0f, 1.0f, 50.0f ) );
 		body->AddBox( boxDef );
 
+		bodyDef.bodyType = eDynamicBody;
+		bodyDef.position.Set( 0, 5.0f, 0 );
+		body = scene.CreateBody( bodyDef );
 		for ( int i = 0; i < 20; ++i )
 		{
-			bodyDef.bodyType = eDynamicBody;
-			bodyDef.position.Set( 0, 5.0f, 0 );
-			body = scene.CreateBody( bodyDef );
 			tx.position.Set( q3RandomFloat( 1.0f, 10.0f ), q3RandomFloat( 1.0f, 10.0f ), q3RandomFloat( 1.0f, 10.0f ) );
 			boxDef.Set( tx, q3Vec3( 1.0f, 1.0f, 1.0f ) );
 			body->AddBox( boxDef );

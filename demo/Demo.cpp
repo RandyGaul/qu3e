@@ -37,6 +37,7 @@
 #include "DropBoxes.h"
 #include "RayPush.h"
 #include "BoxStack.h"
+#include "Test.h"
 
 float dt = 1.0f / 60.0f;
 q3Scene scene( dt );
@@ -381,7 +382,7 @@ void MainLoop( void )
 
 	ImGui::SetNewWindowDefaultPos( ImVec2( float( w - 300 - 30 ), 30 ) );
 	ImGui::Begin( "q3Scene Settings", NULL, ImVec2( 300, 225 ) );
-	ImGui::Combo( "Demo", &currentDemo, "Drop Boxes\0Ray Push\0Box Stack\0" );
+	ImGui::Combo( "Demo", &currentDemo, "Drop Boxes\0Ray Push\0Box Stack\0Test\0" );
 	ImGui::Checkbox( "Pause", &paused );
 	if ( paused )
 		ImGui::Checkbox( "Single Step", &singleStep );
@@ -531,7 +532,9 @@ int InitApp( int argc, char** argv )
 	demos[ 0 ] = new DropBoxes( );
 	demos[ 1 ] = new RayPush( );
 	demos[ 2 ] = new BoxStack( );
-	demoCount = 3;
+	demos[ 3 ] = new Test( );
+	demoCount = 4;
+	currentDemo = 3;
 	demos[ currentDemo ]->Init( );
 	sprintf( sceneFileName, "q3dump.txt" );
 

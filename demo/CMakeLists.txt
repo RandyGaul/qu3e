@@ -12,6 +12,7 @@ set(demo_hdrs
 	RayPush.h
 	BoxStack.h
 	Clock.h
+	Test.h
 )
 
 source_group(Include FILES ${demo_srcs} ${demo_hdrs})

@@ -98,7 +98,7 @@ const q3Box* q3Body::AddBox( const q3BoxDef& def )
 	box->e = def.m_e;
 	box->next = m_boxes;
 	m_boxes = box;
-	box->ComputeAABB( q3Mul( m_tx, box->local ), &aabb );
+	box->ComputeAABB( m_tx, &aabb );
 
 	box->body = this;
 	box->friction = def.m_friction;

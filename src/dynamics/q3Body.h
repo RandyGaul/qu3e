@@ -66,6 +66,8 @@ public:
 
 	void ApplyLinearForce( const q3Vec3& force );
 	void ApplyForceAtWorldPoint( const q3Vec3& force, const q3Vec3& point );
+	void ApplyLinearImpulse( const q3Vec3& impulse );
+	void ApplyLinearImpulseAtWorldPoint( const q3Vec3& impulse, const q3Vec3& point );
 	void ApplyTorque( const q3Vec3& torque );
 	void SetToAwake( );
 	void SetToSleep( );

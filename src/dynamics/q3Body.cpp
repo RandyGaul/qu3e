@@ -203,6 +203,23 @@ void q3Body::ApplyForceAtWorldPoint( const q3Vec3& force, const q3Vec3& point )
 }
 
 //--------------------------------------------------------------------------------------------------
+void q3Body::ApplyLinearImpulse( const q3Vec3& impulse )
+{
+    m_linearVelocity += impulse * m_invMass;
+
+    SetToAwake( );
+}
+
+//--------------------------------------------------------------------------------------------------
+void q3Body::ApplyLinearImpulseAtWorldPoint( const q3Vec3& impulse, const q3Vec3& point )
+{
+    m_linearVelocity += impulse * m_invMass;
+    m_angularVelocity += m_invInertiaWorld * q3Cross( point - m_worldCenter, impulse );
+
+    SetToAwake( );
+}
+
+//--------------------------------------------------------------------------------------------------
 void q3Body::ApplyTorque( const q3Vec3& torque )
 {
 	m_torque += torque;

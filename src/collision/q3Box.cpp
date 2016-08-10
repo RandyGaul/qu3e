@@ -55,8 +55,6 @@ bool q3Box::Raycast( const q3Transform& tx, q3RaycastData* raycast ) const
 	q3Transform world = q3Mul( tx, local );
 	q3Vec3 d = q3MulT( world.rotation, raycast->dir );
 	q3Vec3 p = q3MulT( world, raycast->start );
-	r32 tfirst = 0;
-	r32 tlast = raycast->t;
 	const r32 epsilon = r32( 1.0e-8 );
 	r32 tmin = 0;
 	r32 tmax = raycast->t;

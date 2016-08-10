@@ -436,7 +436,7 @@ void q3Scene::RayCast( q3QueryCallback *cb, q3RaycastData& rayCast ) const
 void q3Scene::Dump( FILE* file ) const
 {
 	fprintf( file, "// Ensure 64/32-bit memory compatability with the dump contents\n" );
-	fprintf( file, "assert( sizeof( int* ) == %d );\n", sizeof( int* ) );
+	fprintf( file, "assert( sizeof( int* ) == %lu );\n", sizeof( int* ) );
 	fprintf( file, "scene.SetGravity( q3Vec3( %.15lf, %.15lf, %.15lf ) );\n", m_gravity.x, m_gravity.y, m_gravity.z );
 	fprintf( file, "scene.SetAllowSleep( %s );\n", m_allowSleep ? "true" : "false" );
 	fprintf( file, "scene.SetEnableFriction( %s );\n", m_enableFriction ? "true" : "false" );

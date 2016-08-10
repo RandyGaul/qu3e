@@ -121,12 +121,11 @@ void q3Body::RemoveBox( const q3Box* box )
 	assert( box->body == this );
 
 	q3Box* node = m_boxes;
-	q3Box* list = m_boxes;
 
 	bool found = false;
 	if ( node == box )
 	{
-		list = node->next;
+		m_boxes = node->next;
 		found = true;
 	}
 

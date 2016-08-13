@@ -295,7 +295,7 @@ const q3Vec3 q3Body::GetLinearVelocity( ) const
 }
 
 //--------------------------------------------------------------------------------------------------
-const q3Vec3 q3Body::GetLinearVelocityAtWorldPoint( const q3Vec3& p ) const
+const q3Vec3 q3Body::GetVelocityAtWorldPoint( const q3Vec3& p ) const
 {
 	q3Vec3 directionToPoint = p - m_worldCenter;
 	q3Vec3 relativeAngularVel = q3Cross( m_angularVelocity, directionToPoint );

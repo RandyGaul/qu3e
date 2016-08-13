@@ -79,6 +79,7 @@ public:
 	const q3Vec3 GetWorldPoint( const q3Vec3& p ) const;
 	const q3Vec3 GetWorldVector( const q3Vec3& v ) const;
 	const q3Vec3 GetLinearVelocity( ) const;
+	const q3Vec3 GetLinearVelocityAtWorldPoint( const q3Vec3& p ) const;
 	void SetLinearVelocity( const q3Vec3& v );
 	const q3Vec3 GetAngularVelocity( ) const;
 	void SetAngularVelocity( const q3Vec3 v );

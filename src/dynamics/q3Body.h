@@ -104,6 +104,8 @@ public:
 	// used as C++ code to re-create an initial scene setup.
 	void Dump( FILE* file, i32 index ) const;
 
+	const r32 GetMass( ) const;
+	const r32 GetInvMass( ) const;
 private:
 	// m_flags
 	enum

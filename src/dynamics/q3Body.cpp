@@ -253,7 +253,7 @@ bool q3Body::IsAwake( ) const
 }
 
 //--------------------------------------------------------------------------------------------------
-const r32 q3Body::GetMass( ) const
+r32 q3Body::GetMass( ) const
 {
     return m_mass;
 }

@@ -294,6 +294,14 @@ const q3Vec3 q3Body::GetLinearVelocity( ) const
 	return m_linearVelocity;
 }
 
+//--------------------------------------------------------------------------------------------------
+const q3Vec3 q3Body::GetLinearVelocityAtWorldPoint( const q3Vec3& p ) const
+{
+	q3Vec3 directionToPoint = p - m_worldCenter;
+	q3Vec3 relativeAngularVel = q3Cross( m_angularVelocity, directionToPoint );
+
+	return m_linearVelocity + relativeAngularVel;
+}
 
 //--------------------------------------------------------------------------------------------------
 void q3Body::SetLinearVelocity( const q3Vec3& v )

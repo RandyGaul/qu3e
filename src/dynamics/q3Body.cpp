@@ -259,7 +259,7 @@ r32 q3Body::GetMass( ) const
 }
 
 //--------------------------------------------------------------------------------------------------
-const r32 q3Body::GetInvMass( ) const
+r32 q3Body::GetInvMass( ) const
 {
     return m_invMass;
 }

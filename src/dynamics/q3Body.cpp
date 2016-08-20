@@ -48,6 +48,8 @@ q3Body::q3Body( const q3BodyDef& def, q3Scene* scene )
 	m_userData = def.userData;
 	m_scene = scene;
 	m_flags = 0;
+	m_linearDamping = def.linearDamping;
+	m_angularDamping = def.angularDamping;
 
 	if ( def.bodyType == eDynamicBody )
 		m_flags |= q3Body::eDynamic;
@@ -413,6 +415,30 @@ i32 q3Body::GetLayers( ) const
 const q3Quaternion q3Body::GetQuaternion( ) const
 {
 	return m_q;
+}
+
+//--------------------------------------------------------------------------------------------------
+void q3Body::SetLinearDamping( r32 damping )
+{
+	m_linearDamping = damping;
+}
+
+//--------------------------------------------------------------------------------------------------
+r32 q3Body::GetLinearDamping( r32 damping ) const
+{
+	return m_linearDamping;
+}
+
+//--------------------------------------------------------------------------------------------------
+void q3Body::SetAngularDamping( r32 damping )
+{
+	m_angularDamping = damping;
+}
+
+//--------------------------------------------------------------------------------------------------
+r32 q3Body::GetAngularDamping( r32 damping ) const
+{
+	return m_angularDamping;
 }
 
 //--------------------------------------------------------------------------------------------------

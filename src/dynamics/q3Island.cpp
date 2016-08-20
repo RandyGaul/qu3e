@@ -64,8 +64,8 @@ void q3Island::Solve( )
 			// v2 = exp(-c * dt) * v1
 			// Pade approximation:
 			// v2 = v1 * 1 / (1 + c * dt)
-			body->m_linearVelocity *= r32( 1.0 ) / (r32( 1.0 ) + m_dt * r32( 0.0 ));
-			body->m_angularVelocity *= r32( 1.0 ) / (r32( 1.0 ) + m_dt * r32( 0.1 ));
+			body->m_linearVelocity *= r32( 1.0 ) / (r32( 1.0 ) + m_dt * body->m_linearDamping);
+			body->m_angularVelocity *= r32( 1.0 ) / (r32( 1.0 ) + m_dt * body->m_angularDamping);
 		}
 
 		v->v = body->m_linearVelocity;

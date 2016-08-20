@@ -90,6 +90,11 @@ public:
 	i32 GetLayers( ) const;
 	const q3Quaternion GetQuaternion( ) const;
 
+	void SetLinearDamping( r32 damping );
+	r32 GetLinearDamping( r32 damping ) const;
+	void SetAngularDamping( r32 damping );
+	r32 GetAngularDamping( r32 damping ) const;
+
 	// Manipulating the transformation of a body manually will result in
 	// non-physical behavior. Contacts are updated upon the next call to
 	// q3Scene::Step( ). Parameters are in world space. All body types
@@ -146,6 +151,9 @@ private:
 	q3Body* m_prev;
 	i32 m_islandIndex;
 
+	r32 m_linearDamping;
+	r32 m_angularDamping;
+
 	q3ContactEdge* m_contactList;
 
 	friend class q3Scene;
@@ -187,6 +195,9 @@ struct q3BodyDef
 		lockAxisX = false;
 		lockAxisY = false;
 		lockAxisZ = false;
+
+		linearDamping = r32( 0.0 );
+		angularDamping = r32( 0.1 );
 	}
 
 	q3Vec3 axis;			// Initial world transformation.
@@ -197,6 +208,9 @@ struct q3BodyDef
 	r32 gravityScale;		// Convenient scale values for gravity x, y and z directions.
 	i32 layers;				// Bitmask of collision layers. Bodies matching at least one layer can collide.
 	void* userData;			// Use to store application specific data.
+
+	r32 linearDamping;
+	r32 angularDamping;
 
 	// Static, dynamic or kinematic. Dynamic bodies with zero mass are defaulted
 	// to a mass of 1. Static bodies never move or integrate, and are very CPU

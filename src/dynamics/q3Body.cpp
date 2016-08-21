@@ -48,6 +48,8 @@ q3Body::q3Body( const q3BodyDef& def, q3Scene* scene )
 	m_userData = def.userData;
 	m_scene = scene;
 	m_flags = 0;
+	m_linearDamping = def.linearDamping;
+	m_angularDamping = def.angularDamping;
 
 	if ( def.bodyType == eDynamicBody )
 		m_flags |= q3Body::eDynamic;
@@ -203,6 +205,23 @@ void q3Body::ApplyForceAtWorldPoint( const q3Vec3& force, const q3Vec3& point )
 }
 
 //--------------------------------------------------------------------------------------------------
+void q3Body::ApplyLinearImpulse( const q3Vec3& impulse )
+{
+    m_linearVelocity += impulse * m_invMass;
+
+    SetToAwake( );
+}
+
+//--------------------------------------------------------------------------------------------------
+void q3Body::ApplyLinearImpulseAtWorldPoint( const q3Vec3& impulse, const q3Vec3& point )
+{
+    m_linearVelocity += impulse * m_invMass;
+    m_angularVelocity += m_invInertiaWorld * q3Cross( point - m_worldCenter, impulse );
+
+    SetToAwake( );
+}
+
+//--------------------------------------------------------------------------------------------------
 void q3Body::ApplyTorque( const q3Vec3& torque )
 {
 	m_torque += torque;
@@ -233,6 +252,18 @@ void q3Body::SetToSleep( )
 bool q3Body::IsAwake( ) const
 {
 	return m_flags & eAwake ? true : false;
+}
+
+//--------------------------------------------------------------------------------------------------
+r32 q3Body::GetMass( ) const
+{
+    return m_mass;
+}
+
+//--------------------------------------------------------------------------------------------------
+r32 q3Body::GetInvMass( ) const
+{
+    return m_invMass;
 }
 
 //--------------------------------------------------------------------------------------------------
@@ -277,6 +308,14 @@ const q3Vec3 q3Body::GetLinearVelocity( ) const
 	return m_linearVelocity;
 }
 
+//--------------------------------------------------------------------------------------------------
+const q3Vec3 q3Body::GetVelocityAtWorldPoint( const q3Vec3& p ) const
+{
+	q3Vec3 directionToPoint = p - m_worldCenter;
+	q3Vec3 relativeAngularVel = q3Cross( m_angularVelocity, directionToPoint );
+
+	return m_linearVelocity + relativeAngularVel;
+}
 
 //--------------------------------------------------------------------------------------------------
 void q3Body::SetLinearVelocity( const q3Vec3& v )
@@ -385,9 +424,32 @@ void* q3Body::GetUserData( ) const
 }
 
 //--------------------------------------------------------------------------------------------------
+void q3Body::SetLinearDamping( r32 damping )
+{
+	m_linearDamping = damping;
+}
+
+//--------------------------------------------------------------------------------------------------
+r32 q3Body::GetLinearDamping( r32 damping ) const
+{
+	return m_linearDamping;
+}
+
+//--------------------------------------------------------------------------------------------------
+void q3Body::SetAngularDamping( r32 damping )
+{
+	m_angularDamping = damping;
+}
+
+//--------------------------------------------------------------------------------------------------
+r32 q3Body::GetAngularDamping( r32 damping ) const
+{
+	return m_angularDamping;
+}
+
+//--------------------------------------------------------------------------------------------------
 void q3Body::Render( q3Render* render ) const
 {
-	q3Transform tx = m_tx;
 	bool awake = IsAwake( );
 	q3Box* box = m_boxes;
 

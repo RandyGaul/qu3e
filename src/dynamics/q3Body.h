@@ -67,6 +67,8 @@ public:
 
 	void ApplyLinearForce( const q3Vec3& force );
 	void ApplyForceAtWorldPoint( const q3Vec3& force, const q3Vec3& point );
+	void ApplyLinearImpulse( const q3Vec3& impulse );
+	void ApplyLinearImpulseAtWorldPoint( const q3Vec3& impulse, const q3Vec3& point );
 	void ApplyTorque( const q3Vec3& torque );
 	void SetToAwake( );
 	void SetToSleep( );
@@ -78,6 +80,7 @@ public:
 	const q3Vec3 GetWorldPoint( const q3Vec3& p ) const;
 	const q3Vec3 GetWorldVector( const q3Vec3& v ) const;
 	const q3Vec3 GetLinearVelocity( ) const;
+	const q3Vec3 GetVelocityAtWorldPoint( const q3Vec3& p ) const;
 	void SetLinearVelocity( const q3Vec3& v );
 	const q3Vec3 GetAngularVelocity( ) const;
 	void SetAngularVelocity( const q3Vec3 v );
@@ -89,6 +92,11 @@ public:
 	const q3Quaternion GetQuaternion( ) const;
 	void* GetUserData( ) const;	
   
+	void SetLinearDamping( r32 damping );
+	r32 GetLinearDamping( r32 damping ) const;
+	void SetAngularDamping( r32 damping );
+	r32 GetAngularDamping( r32 damping ) const;
+
 	// Manipulating the transformation of a body manually will result in
 	// non-physical behavior. Contacts are updated upon the next call to
 	// q3Scene::Step( ). Parameters are in world space. All body types
@@ -103,6 +111,8 @@ public:
 	// used as C++ code to re-create an initial scene setup.
 	void Dump( FILE* file, i32 index ) const;
 
+	r32 GetMass( ) const;
+	r32 GetInvMass( ) const;
 private:
 	// m_flags
 	enum
@@ -142,6 +152,9 @@ private:
 	q3Body* m_next;
 	q3Body* m_prev;
 	i32 m_islandIndex;
+
+	r32 m_linearDamping;
+	r32 m_angularDamping;
 
 	q3ContactEdge* m_contactList;
 
@@ -184,6 +197,9 @@ struct q3BodyDef
 		lockAxisX = false;
 		lockAxisY = false;
 		lockAxisZ = false;
+
+		linearDamping = r32( 0.0 );
+		angularDamping = r32( 0.1 );
 	}
 
 	q3Vec3 axis;			// Initial world transformation.
@@ -194,6 +210,9 @@ struct q3BodyDef
 	r32 gravityScale;		// Convenient scale values for gravity x, y and z directions.
 	i32 layers;				// Bitmask of collision layers. Bodies matching at least one layer can collide.
 	void* userData;			// Use to store application specific data.
+
+	r32 linearDamping;
+	r32 angularDamping;
 
 	// Static, dynamic or kinematic. Dynamic bodies with zero mass are defaulted
 	// to a mass of 1. Static bodies never move or integrate, and are very CPU

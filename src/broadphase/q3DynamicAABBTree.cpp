@@ -244,11 +244,12 @@ i32 q3DynamicAABBTree::Balance( i32 iA )
 	if ( A->IsLeaf( ) || A->height == 1 )
 		return iA;
 
-	//      A
-	//    /   \
-	//   B     C
-	//  / \   / \
-	// D   E F   G
+	/*      A
+	      /   \
+	     B     C
+	    / \   / \
+	   D   E F   G
+	*/
 
 	i32 iB = A->left;
 	i32 iC = A->right;

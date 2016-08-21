@@ -50,6 +50,7 @@ enum q3BodyType
 class q3Body
 {
 public:
+
 	// Adds a box to this body. Boxes are all defined in local space
 	// of their owning body. Boxes cannot be defined relative to one
 	// another. The body will recalculate its mass values. No contacts
@@ -86,7 +87,8 @@ public:
 	void SetLayers( i32 layers );
 	i32 GetLayers( ) const;
 	const q3Quaternion GetQuaternion( ) const;
-
+	void* GetUserData( ) const;	
+  
 	// Manipulating the transformation of a body manually will result in
 	// non-physical behavior. Contacts are updated upon the next call to
 	// q3Scene::Step( ). Parameters are in world space. All body types

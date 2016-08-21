@@ -418,6 +418,12 @@ const q3Quaternion q3Body::GetQuaternion( ) const
 }
 
 //--------------------------------------------------------------------------------------------------
+void* q3Body::GetUserData( ) const
+{
+  return m_userData;
+}
+
+//--------------------------------------------------------------------------------------------------
 void q3Body::SetLinearDamping( r32 damping )
 {
 	m_linearDamping = damping;

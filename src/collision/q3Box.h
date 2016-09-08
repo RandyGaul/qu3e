@@ -48,7 +48,7 @@ struct q3MassData
 struct q3Box
 {
 	q3Transform local;
-	q3Vec3 e;
+	q3Vec3 e; // extent, as in the extent of each OBB axis
 
 	q3Box* next;
 	class q3Body* body;

@@ -50,8 +50,6 @@ inline void q3Free( void* memory )
 //--------------------------------------------------------------------------------------------------
 // q3Stack
 //--------------------------------------------------------------------------------------------------
-// 20MB stack size, change as necessary
-const i32 q3k_stackSize = 1024 * 1024 * 20;
 
 class q3Stack
 {
@@ -66,11 +64,12 @@ public:
 	q3Stack( );
 	~q3Stack( );
 
+	void Reserve( u32 size );
 	void *Allocate( i32 size );
 	void Free( void *data );
 
 private:
-	u8 m_memory[ q3k_stackSize ];
+	u8* m_memory;
 	q3StackEntry* m_entries;
 
 	i32 m_index;
@@ -78,6 +77,7 @@ private:
 	i32 m_allocation;
 	i32 m_entryCount;
 	i32 m_entryCapacity;
+	u32 m_stackSize;
 };
 
 //--------------------------------------------------------------------------------------------------

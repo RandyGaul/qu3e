@@ -200,6 +200,7 @@ void q3ContactManager::TestCollisions( void )
 
 	while( constraint )
 	{
+		constraint->m_flags &= ~q3ContactConstraint::eIsland;
 		q3Box *A = constraint->A;
 		q3Box *B = constraint->B;
 		q3Body *bodyA = A->body;

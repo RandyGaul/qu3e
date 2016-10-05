@@ -72,6 +72,12 @@ void q3Scene::Step( )
 		body->m_flags &= ~q3Body::eIsland;
 
 	// Size the stack island, pick worst case size
+	m_stack.Reserve( sizeof( q3Body* ) * m_bodyCount
+	+ sizeof( q3VelocityState ) * m_bodyCount
+	+ sizeof( q3ContactConstraint* ) * m_contactManager.m_contactCount
+	+ sizeof( q3ContactConstraintState ) * m_contactManager.m_contactCount
+	+ sizeof( q3Body* ) * m_bodyCount);
+
 	q3Island island;
 	island.m_bodyCapacity = m_bodyCount;
 	island.m_contactCapacity = m_contactManager.m_contactCount;

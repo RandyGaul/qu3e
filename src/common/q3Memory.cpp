@@ -34,24 +34,49 @@
 // q3Stack
 //--------------------------------------------------------------------------------------------------
 q3Stack::q3Stack( )
-	: m_entries( (q3StackEntry*)q3Alloc( sizeof( q3StackEntry ) * 64 ) )
+	: m_memory( 0 )
+	, m_entries( (q3StackEntry*)q3Alloc( sizeof( q3StackEntry ) * 64 ) )
 	, m_index( 0 )
 	, m_allocation( 0 )
 	, m_entryCount( 0 )
 	, m_entryCapacity( 64 )
+	, m_stackSize( 0 )
 {
 }
 
 //--------------------------------------------------------------------------------------------------
 q3Stack::~q3Stack( )
 {
+	if (m_memory)
+	{
+		q3Free(m_memory);
+	}
 	assert( m_index == 0 );
 	assert( m_entryCount == 0 );
+}
+
+void q3Stack::Reserve( u32 size )
+{
+	if ( size == 0 )
+	{
+		return;
+	}
+	if ( m_index + size >= m_stackSize )
+	{
+		if (m_memory)
+		{
+			q3Free(m_memory);
+		}
+		m_memory = (u8*)q3Alloc(m_index + size);
+		m_stackSize = m_index + size;
+	}
 }
 
 //--------------------------------------------------------------------------------------------------
 void *q3Stack::Allocate( i32 size )
 {
+	assert( m_index + size <= m_stackSize );
+
 	if ( m_entryCount == m_entryCapacity )
 	{
 		q3StackEntry* oldEntries = m_entries;
@@ -63,9 +88,6 @@ void *q3Stack::Allocate( i32 size )
 
 	q3StackEntry* entry = m_entries + m_entryCount;
 	entry->size = size;
-
-	// Make sure enough memory is available for this allocation
-	assert( m_index + size <= q3k_stackSize );
 
 	entry->data = m_memory + m_index;
 	m_index += size;

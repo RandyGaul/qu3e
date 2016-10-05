@@ -200,11 +200,12 @@ void q3ContactManager::TestCollisions( void )
 
 	while( constraint )
 	{
-		constraint->m_flags &= ~q3ContactConstraint::eIsland;
 		q3Box *A = constraint->A;
 		q3Box *B = constraint->B;
 		q3Body *bodyA = A->body;
 		q3Body *bodyB = B->body;
+
+		constraint->m_flags &= ~q3ContactConstraint::eIsland;
 
 		if( !bodyA->IsAwake( ) && !bodyB->IsAwake( ) )
 		{
@@ -261,21 +262,14 @@ void q3ContactManager::TestCollisions( void )
 
 		if ( m_contactListener )
 		{
-            if (
-                constraint->m_flags & q3ContactConstraint::eColliding &&
-                !(constraint->m_flags & q3ContactConstraint::eWasColliding)
-                )
-            {
-                m_contactListener->BeginContact( constraint );
-            }
+			i32 now_colliding = constraint->m_flags & q3ContactConstraint::eColliding;
+			i32 was_colliding = constraint->m_flags & q3ContactConstraint::eWasColliding;
 
-            else if (
-                !(constraint->m_flags & q3ContactConstraint::eColliding) &&
-                constraint->m_flags & q3ContactConstraint::eWasColliding
-                )
-            {
-                m_contactListener->EndContact( constraint );
-            }
+			if ( now_colliding && !was_colliding )
+				m_contactListener->BeginContact( constraint );
+
+			else if ( !now_colliding && was_colliding )
+				m_contactListener->EndContact( constraint );
 		}
 
 		constraint = constraint->next;

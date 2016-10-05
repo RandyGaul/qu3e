@@ -71,9 +71,6 @@ void q3Scene::Step( )
 	for ( q3Body* body = m_bodyList; body; body = body->m_next )
 		body->m_flags &= ~q3Body::eIsland;
 
-	for ( q3ContactConstraint* c = m_contactManager.m_contactList; c; c = c->next )
-		c->m_flags &= ~q3ContactConstraint::eIsland;
-
 	// Size the stack island, pick worst case size
 	q3Island island;
 	island.m_bodyCapacity = m_bodyCount;

@@ -200,22 +200,23 @@ void q3ContactManager::TestCollisions( void )
 
 	while( constraint )
 	{
+		constraint->m_flags &= ~q3ContactConstraint::eIsland;
 		q3Box *A = constraint->A;
 		q3Box *B = constraint->B;
 		q3Body *bodyA = A->body;
 		q3Body *bodyB = B->body;
+
+		if( !bodyA->IsAwake( ) && !bodyB->IsAwake( ) )
+		{
+			constraint = constraint->next;
+			continue;
+		}
 
 		if ( !bodyA->CanCollide( bodyB ) )
 		{
 			q3ContactConstraint* next = constraint->next;
 			RemoveContact( constraint );
 			constraint = next;
-			continue;
-		}
-
-		if( !bodyA->IsAwake( ) && !bodyB->IsAwake( ) )
-		{
-			constraint = constraint->next;
 			continue;
 		}
 
@@ -227,7 +228,6 @@ void q3ContactManager::TestCollisions( void )
 			constraint = next;
 			continue;
 		}
-		
 		q3Manifold* manifold = &constraint->manifold;
 		q3Manifold oldManifold = constraint->manifold;
 		q3Vec3 ot0 = oldManifold.tangentVectors[ 0 ];

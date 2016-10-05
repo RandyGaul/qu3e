@@ -39,3 +39,4 @@ CmakeFiles/
 build/
 *.check_cache
 CMakeCache.txt
+bin/demo/q3dump.txt

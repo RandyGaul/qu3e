@@ -47,28 +47,24 @@ q3Stack::q3Stack( )
 //--------------------------------------------------------------------------------------------------
 q3Stack::~q3Stack( )
 {
-	if (m_memory)
-	{
-		q3Free(m_memory);
-	}
+	if (m_memory) q3Free( m_memory );
 	assert( m_index == 0 );
 	assert( m_entryCount == 0 );
 }
 
+//--------------------------------------------------------------------------------------------------
 void q3Stack::Reserve( u32 size )
 {
+	assert( !m_index );
+
 	if ( size == 0 )
-	{
 		return;
-	}
-	if ( m_index + size >= m_stackSize )
+
+	if ( size >= m_stackSize )
 	{
-		if (m_memory)
-		{
-			q3Free(m_memory);
-		}
-		m_memory = (u8*)q3Alloc(m_index + size);
-		m_stackSize = m_index + size;
+		if ( m_memory ) q3Free( m_memory );
+		m_memory = (u8*)q3Alloc( size );
+		m_stackSize = size;
 	}
 }
 

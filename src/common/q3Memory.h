@@ -72,7 +72,7 @@ private:
 	u8* m_memory;
 	q3StackEntry* m_entries;
 
-	i32 m_index;
+	u32 m_index;
 
 	i32 m_allocation;
 	i32 m_entryCount;

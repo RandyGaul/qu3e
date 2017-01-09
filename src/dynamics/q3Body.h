@@ -27,6 +27,8 @@
 #ifndef Q3BODY_H
 #define Q3BODY_H
 
+#include <stdio.h>
+
 #include "../math/q3Math.h"
 #include "../math/q3Transform.h"
 

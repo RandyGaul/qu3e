@@ -50,3 +50,7 @@ include_directories (
 add_library(freeglut_static
 	${freeglut_srcs}
 )
+
+target_link_libraries(freeglut_static
+        X11
+)

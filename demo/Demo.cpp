@@ -368,19 +368,10 @@ void UpdateImGui( float dt )
 // In main.cpp
 void UpdateScene( f32 time );
 
-void MainLoop( void )
+void DisplayLoop ( void )
 {
-	if ( currentDemo != lastDemo )
-	{
-		demos[ lastDemo ]->Shutdown( );
-		demos[ currentDemo ]->Init( );
-		lastDemo = currentDemo;
-	}
-
 	i32 w = glutGet( GLUT_WINDOW_WIDTH );
 	Reshape( w, glutGet( GLUT_WINDOW_HEIGHT ) );
-
-	f32 time = g_clock.Start( );
 
 	UpdateImGui( 1.0f / 60.0f );
 
@@ -403,15 +394,7 @@ void MainLoop( void )
 	}
 	ImGui::End( );
 
-	scene.SetAllowSleep( enableSleep );
-	scene.SetEnableFriction( enableFriction );
-	scene.SetIterations( velocityIterations );
-
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
-	UpdateScene( time );
-
-	g_clock.Stop( );
 
 	scene.Render( &renderer );
 
@@ -420,6 +403,29 @@ void MainLoop( void )
 	ImGui::Render( );
 
 	glutSwapBuffers( );
+}
+
+void MainLoop( void )
+{
+	if ( currentDemo != lastDemo )
+	{
+		demos[ lastDemo ]->Shutdown( );
+		demos[ currentDemo ]->Init( );
+		lastDemo = currentDemo;
+	}
+
+
+	f32 time = g_clock.Start( );
+
+	scene.SetAllowSleep( enableSleep );
+	scene.SetEnableFriction( enableFriction );
+	scene.SetIterations( velocityIterations );
+
+	UpdateScene( time );
+
+	g_clock.Stop( );
+	
+	glutPostRedisplay();
 }
 
 void InitImGui( )
@@ -494,7 +500,7 @@ int InitApp( int argc, char** argv )
 	glutInitWindowPosition( (screenWidth - kWindowWidth) / 2, (screenHeight - kWindowHeight) / 2 );
 	glutCreateWindow( "qu3e Physics by Randy Gaul" );
 
-	glutDisplayFunc( MainLoop );
+	glutDisplayFunc( DisplayLoop );
 	glutReshapeFunc( Reshape );
 	glutKeyboardUpFunc( KeyboardUp );
 	glutKeyboardFunc( Keyboard );

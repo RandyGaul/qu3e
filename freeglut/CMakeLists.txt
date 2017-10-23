@@ -1,5 +1,7 @@
 add_definitions( -DFREEGLUT_EXPORTS -DFREEGLUT_STATIC -D_CRT_SECURE_NO_WARNINGS )
 
+set(MULTIMEDIA_LIB X11)
+
 if(APPLE)
 	include_directories( /usr/X11/include )
 endif(APPLE)
@@ -8,6 +10,9 @@ if(UNIX)
 	add_definitions( -D__unix__ -DHAVE_FCNTL_H -DHAVE_GETTIMEOFDAY )
 endif(UNIX)
 
+if(WIN32)
+	set(MULTIMEDIA_LIB winmm)
+endif(WIN32)
 
 set(freeglut_srcs
 	freeglut_callbacks.c
@@ -52,5 +57,5 @@ add_library(freeglut_static
 )
 
 target_link_libraries(freeglut_static
-        X11
+        ${MULTIMEDIA_LIB}
 )

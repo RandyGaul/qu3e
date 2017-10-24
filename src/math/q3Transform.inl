@@ -122,3 +122,15 @@ inline void q3Identity( q3Transform& tx )
 	q3Identity( tx.position );
 	q3Identity( tx.rotation );
 }
+
+//--------------------------------------------------------------------------------------------------
+inline const q3Transform q3Inverse( const q3Transform& tx )
+{
+	q3Transform inverted;
+	q3Mat3 zero;
+	q3Zero(zero);
+	
+	inverted.rotation = q3Transpose(tx.rotation);
+	inverted.position = q3Mul(zero-inverted.rotation, tx.position);
+	return inverted;
+}

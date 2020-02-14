@@ -657,7 +657,8 @@ void q3BoxtoBox( q3Manifold* m, q3Box* a, q3Box* b )
 	if ( q3Dot( n, btx.position - atx.position ) < r32( 0.0 ) )
 		n = -n;
 
-	assert( axis != ~0 );
+	if ( axis == ~0 )
+		return;
 
 	if ( axis < 6 )
 	{

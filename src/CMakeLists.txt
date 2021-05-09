@@ -79,6 +79,14 @@ set(qu3e_scene_hdrs
 	scene/q3Scene.h
 )
 
+set(qu3e_c_api_srcs
+	c_api/bindings.cpp
+)
+
+set(qu3e_c_api_hdrs
+	q3_c.h
+)
+
 set(qu3e_hdr
 	q3.h
 )
@@ -98,6 +106,8 @@ if(qu3e_build_shared)
 		${qu3e_math_hdrs}
 		${qu3e_scene_srcs}
 		${qu3e_scene_hdrs}
+		${qu3e_c_api_srcs}
+		${qu3e_c_api_hdrs}
 		${qu3e_hdr}
 	)
 	
@@ -123,6 +133,8 @@ if(qu3e_build_static)
 		${qu3e_math_hdrs}
 		${qu3e_scene_srcs}
 		${qu3e_scene_hdrs}
+		${qu3e_c_api_srcs}
+		${qu3e_c_api_hdrs}
 		${qu3e_hdr}
 	)
 	
@@ -140,4 +152,5 @@ source_group(debug FILES ${qu3e_debug_hdrs})
 source_group(dynamics FILES ${qu3e_dynamics_srcs} ${qu3e_dynamics_hdrs})
 source_group(math FILES ${qu3e_math_srcs} ${qu3e_math_hdrs})
 source_group(scene FILES ${qu3e_scene_srcs} ${qu3e_scene_hdrs})
+source_group(c_api FILES ${qu3e_c_api_srcs} ${qu3e_c_api_hdrs})
 source_group(Include FILES ${qu3e_hdr})

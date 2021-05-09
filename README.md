@@ -49,29 +49,29 @@ Using qu3e is about creating rigid bodies and attaching boxes to them. When a ri
 The only header that should need to be included is **q3.h**. First create a physics scene. Usually only one physics scene needs to ever be created. The user must specify a fixed timestep upon scene creation:
 
 ```c++
-    #include "q3.h"
-	
-    q3Scene scene( 1.0 / 60.0 );
+#include "q3.h"
+
+q3Scene scene( 1.0 / 60.0 );
 ```
 
 A rigid body is created from a physics scene, and rigid bodies (or shapes) cannot be shared between different scenes. Rigid bodies are created by first creating a **q3BodyDef** object. Def objects can be created right on the stack:
 
 ```c++
-    q3BodyDef bodyDef;
-	q3Body* body = scene.CreateBody( bodyDef );
+q3BodyDef bodyDef;
+q3Body* body = scene.CreateBody( bodyDef );
 ```
 
 The **q3BodyDef** can be passed to a scene in return for a new rigid body. The body definition lets the user specify many settings. See q3Body.h for details. Once a rigid body is constructed any number of boxes can be added to it by providing the body with a **q3BoxDef**:
 
 ```c++
-    q3BoxDef boxDef; // See q3Box.h for settings details
-	q3Transform localSpace; // Contains position and orientation, see q3Transform.h for details
-	q3Identity( localSpace ); // Specify the origin, and identity orientation
-	
-	// Create a box at the origin with width, height, depth = (1.0, 1.0, 1.0)
-	// and add it to a rigid body. The transform is defined relative to the owning body
-	boxDef.Set( localSpace, q3Vec3( 1.0, 1.0, 1.0 ) );
-	body->AddBox( boxDef );
+q3BoxDef boxDef; // See q3Box.h for settings details
+q3Transform localSpace; // Contains position and orientation, see q3Transform.h for details
+q3Identity( localSpace ); // Specify the origin, and identity orientation
+
+// Create a box at the origin with width, height, depth = (1.0, 1.0, 1.0)
+// and add it to a rigid body. The transform is defined relative to the owning body
+boxDef.Set( localSpace, q3Vec3( 1.0, 1.0, 1.0 ) );
+body->AddBox( boxDef );
 ```	
 
 To simulate the scene simply call **scene.Step( )**. This will simulate the world forward in time by the timestep specified at the scene's construction (usually 1/60 or 1/30).

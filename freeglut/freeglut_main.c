@@ -1582,7 +1582,7 @@ LRESULT CALLBACK fgWindowProc( HWND hWnd, UINT uMsg, WPARAM wParam,
     switch( uMsg )
     {
     case WM_CREATE:
-        /* The window structure is passed as the creation structure paramter... */
+        /* The window structure is passed as the creation structure parameter... */
         window = (SFG_Window *) (((LPCREATESTRUCT) lParam)->lpCreateParams);
         FREEGLUT_INTERNAL_ERROR_EXIT ( ( window != NULL ), "Cannot create window",
                                        "fgWindowProc" );
